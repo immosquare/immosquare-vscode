@@ -1,7 +1,7 @@
 { 
   "content_tag": {
     "prefix": "ct",
-    "body": ["<%= content_tag(:div, \"${here}\") %>"],
+    "body": ["<%= content_tag(:div, \"${1:here}\") %>"],
     "description": "content_tag"
   },
   "er": {
