@@ -1,0 +1,47 @@
+{ 
+  "content_tag": {
+		"prefix": "ct",
+		"body": ["<%= content_tag(:div, \"${here}\") %>"],
+		"description": "content_tag"
+	},
+  "er": {
+		"prefix": "er",
+		"body": "<%$0 %>",
+		"description": "print ruby tag"
+	},
+  "pc": {
+		"prefix": "pc",
+		"body": "<%# $0 %>",
+		"description": "print comment tag"
+	},
+  "pe": {
+		"prefix": "pe",
+		"body": "<%= $0 %>",
+		"description": "print egual tag"
+	},
+  "if": {
+		"prefix": "if",
+		"body": "\n<% if $1 %>\n\t$0\n<% end %>\n",
+		"description": "ERB if / end"
+	},
+  "else": {
+		"prefix": "else",
+		"body": "<% else %>",
+		"description": "ERB else tag"
+	},
+  "end": {
+		"prefix": "end",
+		"body": "<% end %>\n",
+		"description": "ERB end tag"
+	},
+  "link_to": {
+		"prefix": "lt",
+		"body": "<%= link_to $1, $2 %>",
+		"description": "ERB link tag"
+	},
+  "image tag": {
+		"prefix": "it",
+		"body": "<%= image_tag ${1:source}, :class => \"${2:class}\" %>",
+		"description": "Image tag"
+	}
+}

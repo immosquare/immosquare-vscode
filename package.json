@@ -1,0 +1,20 @@
+{
+  "name": "immosquare-vscode",
+  "displayName": "immosquare-vscode",
+  "description": "immosquare-vscode snippets",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "erb",
+        "path": "./snippets/erb.json"
+      }
+    ]
+  }
+}
