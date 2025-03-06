@@ -29,6 +29,11 @@
     "body": "<% else %>",
     "description": "ERB else tag"
   },
+  "elsif": {
+    "prefix": "elsif",
+    "body": "<% elsif $1 %>\n\t$0\n",
+    "description": "ERB elsif tag"
+  },
   "end": {
     "prefix": "end",
     "body": "<% end %>\n",
