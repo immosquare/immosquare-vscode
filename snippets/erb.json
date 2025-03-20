@@ -51,7 +51,7 @@
   },
   "immosquare logger": {
     "prefix": "il",
-    "body": "<%= ImmosquareLogger.info ${1:data} %>",
+    "body": "<% ImmosquareLogger.info ${1:data} %>",
     "description": "Immosquare Loggger"
   }
 }
