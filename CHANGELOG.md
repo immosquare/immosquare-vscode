@@ -1,3 +1,6 @@
+## [0.0.5] - 2025-03-20
+- Fix : Do not display the logger in HTML
+
 ## [0.0.4] - 2025-03-20
 - Add new snippet for Logger
 
