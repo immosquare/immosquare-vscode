@@ -26,3 +26,8 @@
 | `ctrl+r` / `cmd+r`             | editor.action.smartSelect.expand         | editorTextFocus                       |
 | `shift+ctrl+r` / `shift+cmd+r` | editor.action.smartSelect.shrink         | editorTextFocus                       |
 | `ctrl+3` / `cmd+3`             | editor.action.insertSnippet              | editorHasSelection                    |
+
+
+
+## Testing
+- To test the extension, tap fn+f5 to open a new window with the extension loaded.
