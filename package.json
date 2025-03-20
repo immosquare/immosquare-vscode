@@ -27,6 +27,10 @@
       {
         "language": "erb",
         "path": "./snippets/erb.json"
+      },
+      {
+        "language": "ruby",
+        "path": "./snippets/ruby.json"
       }
     ],
     "keybindings": [

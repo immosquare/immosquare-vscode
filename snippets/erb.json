@@ -48,5 +48,10 @@
     "prefix": "it",
     "body": "<%= image_tag ${1:source}, :class => \"${2:class}\" %>",
     "description": "Image tag"
+  },
+  "immosquare logger": {
+    "prefix": "il",
+    "body": "<%= ImmosquareLogger.info ${1:data} %>",
+    "description": "Immosquare Loggger"
   }
 }
