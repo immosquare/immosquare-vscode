@@ -41,17 +41,27 @@
   },
   "link_to": {
     "prefix": "lt",
-    "body": "<%= link_to $1, $2 %>",
+    "body": "<%= link_to(t(\"${1:source}\"), ${2:source_path}, :class => \"${3:class}\" ) %>",
     "description": "ERB link tag"
   },
   "image tag": {
     "prefix": "it",
-    "body": "<%= image_tag ${1:source}, :class => \"${2:class}\" %>",
-    "description": "Image tag"
+    "body": "<%= image_tag(${1:source}, :class => \"${2:class}\") %>",
+    "description": "image tag"
   },
   "immosquare logger": {
     "prefix": "il",
     "body": "<% ImmosquareLogger.info ${1:data} %>",
-    "description": "Immosquare Loggger"
+    "description": "immosquare Loggger"
+  },
+  "partial": {
+    "prefix": "partial",
+    "body": "<%= render(:partial => \"${1:partial}\", :locals => { ${2:local} }) %>",
+    "description": "partial"
+  },
+  "simple_form": {
+    "prefix": "simple_form",
+    "body": "<%= simple_form_for(${1:source}, :url => ${2:source_path}) do |f| %>\n\t$0\n<% end %>",
+    "description": "simple_form"
   }
 }

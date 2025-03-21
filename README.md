@@ -2,17 +2,27 @@
 
 ## ERB Snippets
 
+| Prefix        | Description            |
+| --------      | ---------------------- |
+| `ct`          | content_tag            |
+| `er`          | print ruby tag         |
+| `pc`          | print comment tag      |
+| `pe`          | print equal tag        |
+| `if`          | ERB if / end           |
+| `else`        | ERB else tag           |
+| `end`         | ERB end tag            |
+| `lt`          | ERB link tag           |
+| `it`          | Image tag              |
+| `il`          | immosquare logger      |
+| `partial`     | partial                |
+| `simple_form` | simple_form            |
+
+
+## Ruby Snippets
+
 | Prefix   | Description            |
 | -------- | ---------------------- |
-| `ct`     | content_tag            |
-| `er`     | print ruby tag         |
-| `pc`     | print comment tag      |
-| `pe`     | print equal tag        |
-| `if`     | ERB if / end           |
-| `else`   | ERB else tag           |
-| `end`    | ERB end tag            |
-| `lt`     | ERB link tag           |
-| `it`     | Image tag              |
+| `il`     | immosquare logger      |
 
 ## Keybindings
 
