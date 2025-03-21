@@ -1,3 +1,6 @@
+## [0.0.6] - 2025-03-20
+- Improve erb snippets
+
 ## [0.0.5] - 2025-03-20
 - Fix : Do not display the logger in HTML
 - Add node_modules to .vscodeignore
