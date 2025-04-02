@@ -6,6 +6,7 @@
   "version": "0.0.6",
   "icon": "icon.png",
   "license": "MIT",
+  "main": "./src/immosquare-vscode.js",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -14,7 +15,11 @@
     "url": "https://github.com/immosquare/immosquare-vscode.git"
   },
   "categories": [
-    "Snippets"
+    "Snippets",
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
   ],
   "contributes": {
     "languages": [
@@ -31,6 +36,16 @@
       {
         "language": "ruby",
         "path": "./src/snippets/ruby.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "immosquare-vscode.CleanOnSave",
+        "title": "immosquare-cleaner command"
+      },
+      {
+        "command": "immosquare-vscode.reloadBrowserOnSave",
+        "title": "Reload Browser On Save"
       }
     ],
     "keybindings": [
