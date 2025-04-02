@@ -1,6 +1,30 @@
 # immosquare-vscode
 
-## ERB Snippets
+This vscode extension provides several features to enhance your development workflow:
+
+- [Run on Save Commands](#run-on-save-commands) 
+- [Code Snippets](#snippets) 
+- [Keybindings](#keybindings)
+ 
+## Run on Save Commands
+
+This extension automatically runs two commands when a file is saved:
+
+### 1. CleanOnSave Command
+- **Purpose**: Runs the [immosquare-cleaner](https://github.com/immosquare/immosquare-cleaner) gem on the saved file to clean the code (Rubocop, Eslint, Prettier, etc.)
+- **Requirement**: The `immosquare-cleaner` gem must be installed in your project
+
+### 2. ReloadBrowserOnSave Command
+- **Purpose**: Triggers browser reload for specific file types
+- **Supported Extensions**: `.js`, `.js.erb`, `.html`, `.html.erb`
+- **Behavior**: Automatically detects file extension and reloads the browser if required
+
+### Output Channel
+All extension activities are logged in the `immosquare-vscode` output channel, accessible through vscode's output panel (View > Output > immosquare-vscode).
+
+## Snippets
+
+### ERB Snippets
 
 | Prefix        | Description            |
 | --------      | ---------------------- |
@@ -18,7 +42,7 @@
 | `simple_form` | simple_form            |
 
 
-## Ruby Snippets
+### Ruby Snippets
 
 | Prefix   | Description            |
 | -------- | ---------------------- |
