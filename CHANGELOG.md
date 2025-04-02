@@ -1,4 +1,7 @@
-## [0.0.7] - 2025-03-20
+## [0.0.8] - 2025-04-02
+ - Using '*' activation is usually a bad idea as it impacts performance, using 'onStartupFinished' is a better approach.
+
+## [0.0.7] - 2025-04-02
 - Add CleanOnSave command (immosquare-cleaner vscode extension)
 - Add reloadBrowserOnSave command
 
