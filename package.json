@@ -3,7 +3,7 @@
   "publisher": "immosquare",
   "displayName": "immosquare-vscode",
   "description": "immosquare-vscode snippets & keybindings",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "icon": "icon.png",
   "license": "MIT",
   "main": "./src/immosquare-vscode.js",

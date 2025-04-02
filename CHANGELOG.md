@@ -1,3 +1,7 @@
+## [0.0.7] - 2025-03-20
+- Add CleanOnSave command (immosquare-cleaner vscode extension)
+- Add reloadBrowserOnSave command
+
 ## [0.0.6] - 2025-03-20
 - Improve erb snippets
 
