@@ -20,17 +20,17 @@
     "languages": [
       {
         "id": "erb",
-        "configuration": "./languages/erb.json"
+        "configuration": "./src/languages/erb.json"
       }
     ],
     "snippets": [
       {
         "language": "erb",
-        "path": "./snippets/erb.json"
+        "path": "./src/snippets/erb.json"
       },
       {
         "language": "ruby",
-        "path": "./snippets/ruby.json"
+        "path": "./src/snippets/ruby.json"
       }
     ],
     "keybindings": [
