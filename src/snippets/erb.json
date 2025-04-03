@@ -1,67 +1,67 @@
-{ 
+{
   "content_tag": {
-    "prefix": "ct",
-    "body": ["<%= content_tag(:div, \"${1:here}\") %>"],
+    "prefix":      "ct",
+    "body":        ["<%= content_tag(:div, \"${1:here}\") %>"],
     "description": "content_tag"
   },
   "er": {
-    "prefix": "er",
-    "body": "<%$0 %>",
+    "prefix":      "er",
+    "body":        "<%$0 %>",
     "description": "print ruby tag"
   },
   "pc": {
-    "prefix": "pc",
-    "body": "<%# $0 %>",
+    "prefix":      "pc",
+    "body":        "<%# $0 %>",
     "description": "print comment tag"
   },
   "pe": {
-    "prefix": "pe",
-    "body": "<%= $0 %>",
+    "prefix":      "pe",
+    "body":        "<%= $0 %>",
     "description": "print egual tag"
   },
   "if": {
-    "prefix": "if",
-    "body": "\n<% if $1 %>\n\t$0\n<% end %>\n",
+    "prefix":      "if",
+    "body":        "\n<% if $1 %>\n\t$0\n<% end %>\n",
     "description": "ERB if / end"
   },
   "else": {
-    "prefix": "else",
-    "body": "<% else %>",
+    "prefix":      "else",
+    "body":        "<% else %>",
     "description": "ERB else tag"
   },
   "elsif": {
-    "prefix": "elsif",
-    "body": "<% elsif $1 %>\n\t$0\n",
+    "prefix":      "elsif",
+    "body":        "<% elsif $1 %>\n\t$0\n",
     "description": "ERB elsif tag"
   },
   "end": {
-    "prefix": "end",
-    "body": "<% end %>\n",
+    "prefix":      "end",
+    "body":        "<% end %>\n",
     "description": "ERB end tag"
   },
   "link_to": {
-    "prefix": "lt",
-    "body": "<%= link_to(t(\"${1:source}\"), ${2:source_path}, :class => \"${3:class}\" ) %>",
+    "prefix":      "lt",
+    "body":        "<%= link_to(t(\"${1:source}\"), ${2:source_path}, :class => \"${3:class}\" ) %>",
     "description": "ERB link tag"
   },
   "image tag": {
-    "prefix": "it",
-    "body": "<%= image_tag(${1:source}, :class => \"${2:class}\") %>",
+    "prefix":      "it",
+    "body":        "<%= image_tag(${1:source}, :class => \"${2:class}\") %>",
     "description": "image tag"
   },
   "immosquare logger": {
-    "prefix": "il",
-    "body": "<% ImmosquareLogger.info ${1:data} %>",
+    "prefix":      "il",
+    "body":        "<% ImmosquareLogger.info ${1:data} %>",
     "description": "immosquare Loggger"
   },
   "partial": {
-    "prefix": "partial",
-    "body": "<%= render(:partial => \"${1:partial}\", :locals => { ${2:local} }) %>",
+    "prefix":      "partial",
+    "body":        "<%= render(:partial => \"${1:partial}\", :locals => { ${2:local} }) %>",
     "description": "partial"
   },
   "simple_form": {
-    "prefix": "simple_form",
-    "body": "<%= simple_form_for(${1:source}, :url => ${2:source_path}) do |f| %>\n\t$0\n<% end %>",
+    "prefix":      "simple_form",
+    "body":        "<%= simple_form_for(${1:source}, :url => ${2:source_path}) do |f| %>\n\t$0\n<% end %>",
     "description": "simple_form"
   }
 }

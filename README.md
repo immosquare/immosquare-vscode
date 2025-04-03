@@ -2,10 +2,11 @@
 
 This vscode extension provides several features to enhance your development workflow:
 
-- [Run on Save Commands](#run-on-save-commands) 
-- [Code Snippets](#snippets) 
+- [Run on Save Commands](#run-on-save-commands)
+- [Code Snippets](#snippets)
 - [Keybindings](#keybindings)
- 
+
+
 ## Run on Save Commands
 
 This extension automatically runs two commands when a file is saved:
@@ -27,7 +28,7 @@ All extension activities are logged in the `immosquare-vscode` output channel, a
 ### ERB Snippets
 
 | Prefix        | Description            |
-| --------      | ---------------------- |
+| ------------- | ---------------------- |
 | `ct`          | content_tag            |
 | `er`          | print ruby tag         |
 | `pc`          | print comment tag      |
