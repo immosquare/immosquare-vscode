@@ -6,15 +6,12 @@ const path   = require("path")
 
 let outputChannel
 const RELOADABLE_EXTENSIONS = [".js", ".js.erb", ".html", ".html.erb"]
-const getFileExtension      = (fileName) => fileName.match(/\.[^.]+$/)?.[0] || ""
+const getFileExtension      = (fileName) => RELOADABLE_EXTENSIONS.find((ext) => fileName.endsWith(ext)) || ""
 
 //==============================================================================
 // Check if the file requires browser reload
 //==============================================================================
-const isReloadableFile = (fileName) => {
-  const extension = getFileExtension(fileName)
-  return RELOADABLE_EXTENSIONS.includes(extension)
-}
+const isReloadableFile = (fileName) => RELOADABLE_EXTENSIONS.includes(getFileExtension(fileName))
 
 //==============================================================================
 // Reload browser
