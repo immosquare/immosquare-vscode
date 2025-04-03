@@ -82,7 +82,6 @@ const runCleaner = (filePath) => new Promise((resolve, reject) => {
 const activate = (context) => {
   outputChannel = vscode.window.createOutputChannel("immosquare-vscode")
   outputChannel.appendLine("Extension immosquare-vscode activée")
-  outputChannel.show(true)
   context.subscriptions.push(outputChannel)
 
   //==============================================================================
