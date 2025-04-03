@@ -21,14 +21,17 @@
     "configuration": {
       "title":      "Immosquare VSCode",
       "properties": {"immosquare-vscode.reloadableExtensions": {
-          "type":        "array",
+          "type":        [
+            "array",
+            "boolean"
+          ],
           "default":     [
             ".js",
             ".js.erb",
             ".html",
             ".html.erb"
           ],
-          "description": "Extensions de fichiers qui déclenchent le rechargement du navigateur",
+          "description": "Configure which file extensions should trigger a browser reload when saved",
           "items": {"type": "string"}
         }}
     },

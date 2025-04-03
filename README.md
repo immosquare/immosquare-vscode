@@ -5,6 +5,7 @@ This vscode extension provides several features to enhance your development work
 - [Run on Save Commands](#run-on-save-commands)
 - [Code Snippets](#snippets)
 - [Keybindings](#keybindings)
+- [Settings](#settings)
 
 
 ## Run on Save Commands
@@ -17,11 +18,49 @@ This extension automatically runs two commands when a file is saved:
 
 ### 2. ReloadBrowserOnSave Command
 - **Purpose**: Triggers browser reload for specific file types
-- **Supported Extensions**: `.js`, `.js.erb`, `.html`, `.html.erb`
+- **Supported Extensions**: `.js`, `.js.erb`, `.html`, `.html.erb` (configurable via settings)
 - **Behavior**: Automatically detects file extension and reloads the browser if required
 
 ### Output Channel
 All extension activities are logged in the `immosquare-vscode` output channel, accessible through vscode's output panel (View > Output > immosquare-vscode).
+
+## Settings
+
+### Reloadable Extensions
+- **Setting**: `immosquare-vscode.reloadableExtensions`
+- **Type**: Array of strings
+- **Default**: `[".js", ".js.erb", ".html", ".html.erb"]`
+- **Description**: Configure which file extensions should trigger a browser reload when saved
+- **Disable**: Set to `false` or an empty array `[]` to disable the browser reload feature
+- **Example**: To add `.css` files to the reload list:
+
+  ```json
+  {
+    "immosquare-vscode.reloadableExtensions": [
+      ".js",
+      ".js.erb",
+      ".html",
+      ".html.erb",
+      ".css"
+    ]
+  }
+  ```
+
+- **Example**: To disable the feature:
+
+  ```json
+  {
+    "immosquare-vscode.reloadableExtensions": false
+  }
+  ```
+
+  or
+
+  ```json
+  {
+    "immosquare-vscode.reloadableExtensions": []
+  }
+  ```
 
 ## Snippets
 

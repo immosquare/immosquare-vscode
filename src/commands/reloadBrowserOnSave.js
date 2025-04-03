@@ -4,13 +4,14 @@ const path   = require("path")
 
 let outputChannel
 const getReloadableExtensions = () => {
-  const config = vscode.workspace.getConfiguration("immosquare-vscode")
-  return config.get("reloadableExtensions")
+  const config     = vscode.workspace.getConfiguration("immosquare-vscode")
+  const extensions = config.get("reloadableExtensions")
+  return extensions === false ? [] : extensions
 }
 
 const getFileExtension = (fileName) => {
-  const AllowedExtensions = getReloadableExtensions()
-  return AllowedExtensions.find((ext) => fileName.endsWith(ext)) || ""
+  const allowedExtensions = getReloadableExtensions()
+  return allowedExtensions.find((ext) => fileName.endsWith(ext)) || ""
 }
 
 //==============================================================================
