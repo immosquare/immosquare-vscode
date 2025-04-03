@@ -40,10 +40,11 @@ const checkGemInstallation = () => new Promise((resolve, reject) => {
 // Function to run the immosquare-cleaner command
 //==============================================================================
 const runCleaner = (filePath) => new Promise((resolve, reject) => {
-  const shellCommand = `cd "${workspacePath}" && bundle exec immosquare-cleaner "${filePath}"`
+  const filePathRelativeToWorkspace = filePath.replace(workspacePath, "")
+  const shellCommand                = `cd "${workspacePath}" && bundle exec immosquare-cleaner "${filePath}"`
         
   const outputChannel = getOutputChannel()
-  outputChannel.appendLine(`🔄 Running cleaner: ${filePath}`)
+  outputChannel.appendLine(`🔄 Running cleaner: ${filePathRelativeToWorkspace}`)
   
   //==============================================================================
   // -l : Load the user's profile
