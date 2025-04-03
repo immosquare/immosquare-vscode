@@ -1,15 +1,12 @@
-const vscode               = require("vscode")
-const { getOutputChannel } = require("../utils/outputChannel")
+const vscode = require("vscode")
+const cp     = require("child_process")
+const path   = require("path")
 
-//==============================================================================
-// List of file extensions that require browser reload
-//==============================================================================
+
+
+let outputChannel
 const RELOADABLE_EXTENSIONS = [".js", ".js.erb", ".html", ".html.erb"]
-
-//==============================================================================
-// Extract file extension
-//==============================================================================
-const getFileExtension = (fileName) => fileName.match(/\.[^.]+$/)?.[0] || ""
+const getFileExtension      = (fileName) => fileName.match(/\.[^.]+$/)?.[0] || ""
 
 //==============================================================================
 // Check if the file requires browser reload
@@ -19,8 +16,37 @@ const isReloadableFile = (fileName) => {
   return RELOADABLE_EXTENSIONS.includes(extension)
 }
 
+//==============================================================================
+// Reload browser
+//==============================================================================
+const reloadBrowser = (document) => {
+  try {
+    const extension  = getFileExtension(document.fileName)
+    const scriptPath = path.join(__dirname, "../scripts/reload-browser-darwin.sh")
+
+    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension})`)
+    const result = cp.execSync(scriptPath, { encoding: "utf8" })
+    
+    const messages = result.toString().trim().split("\n")
+    messages.forEach((message) => {
+      outputChannel.appendLine(message)
+    })
+  } catch(error) {
+    outputChannel.appendLine("❌ Error details:")
+    if (error.stdout) {
+      outputChannel.appendLine(`stdout: ${error.stdout.trim()}`)
+    }
+    if (error.stderr) {
+      outputChannel.appendLine(`stderr: ${error.stderr.trim()}`)
+    }
+    outputChannel.appendLine(`Error message: ${error.message}`)
+  }
+}
+
 const activate = (context) => {
-  const outputChannel = getOutputChannel()
+  outputChannel = vscode.window.createOutputChannel("immosquare-vscode (reload")
+  outputChannel.appendLine("Extension immosquare-vscode-reload activated")
+  
   context.subscriptions.push(outputChannel)
 
   //==============================================================================
@@ -28,8 +54,11 @@ const activate = (context) => {
   //==============================================================================
   let saveListener = vscode.workspace.onDidSaveTextDocument((document) => {
     if (isReloadableFile(document.fileName)) {
-      const extension = getFileExtension(document.fileName)
-      outputChannel.appendLine(`🖥️ Browser reloading required for (${extension})`)
+      if (process.platform !== "darwin") {
+        outputChannel.appendLine("⚠️ Automatic browser reload is only available on macOS")
+        return
+      }
+      reloadBrowser(document)
     }
   })
 
@@ -37,6 +66,10 @@ const activate = (context) => {
 }
 
 const deactivate = () => {
+  if (outputChannel) {
+    outputChannel.dispose()
+    outputChannel = null
+  }
 }
 
 module.exports = {

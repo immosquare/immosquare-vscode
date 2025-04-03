@@ -1,10 +1,12 @@
-const vscode               = require("vscode")
-const { spawn }            = require("child_process")
-const { getOutputChannel } = require("../utils/outputChannel")
+const vscode    = require("vscode")
+const { spawn } = require("child_process")
 
 let workspaceFolder
 let workspacePath
+let outputChannel
 let isGemInstalled = false
+
+
 
 //==============================================================================
 // Function to check if the gem immosquare-cleaner is installed on the workspace
@@ -43,7 +45,6 @@ const runCleaner = (filePath) => new Promise((resolve, reject) => {
   const filePathRelativeToWorkspace = filePath.replace(workspacePath, "")
   const shellCommand                = `cd "${workspacePath}" && bundle exec immosquare-cleaner "${filePath}"`
         
-  const outputChannel = getOutputChannel()
   outputChannel.appendLine(`🔄 Running cleaner: ${filePathRelativeToWorkspace}`)
   
   //==============================================================================
@@ -79,7 +80,9 @@ const runCleaner = (filePath) => new Promise((resolve, reject) => {
 // Extension activation
 //==============================================================================
 const activate = (context) => {
-  const outputChannel = getOutputChannel()
+  outputChannel = vscode.window.createOutputChannel("immosquare-vscode")
+  outputChannel.appendLine("Extension immosquare-vscode activée")
+  outputChannel.show(true)
   context.subscriptions.push(outputChannel)
 
   //==============================================================================
@@ -145,6 +148,10 @@ const activate = (context) => {
 // Extension deactivation
 //==============================================================================
 const deactivate = () => {
+  if (outputChannel) {
+    outputChannel.dispose()
+    outputChannel = null
+  }
 }
 
 module.exports = {

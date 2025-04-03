@@ -1,6 +1,5 @@
-const CleanOnSave              = require("./commands/CleanOnSave")
-const reloadBrowserOnSave      = require("./commands/reloadBrowserOnSave")
-const { disposeOutputChannel } = require("./utils/outputChannel")
+const CleanOnSave         = require("./commands/CleanOnSave")
+const reloadBrowserOnSave = require("./commands/reloadBrowserOnSave")
 
 module.exports = {
   activate: (context) => {
@@ -11,6 +10,5 @@ module.exports = {
   deactivate: () => {
     reloadBrowserOnSave.deactivate()
     CleanOnSave.deactivate()
-    disposeOutputChannel()
   }
 } 
