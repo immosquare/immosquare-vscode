@@ -1,3 +1,6 @@
+## [0.0.9] - 2025-04-02
+- Improve reloadBrowserOnSave script
+
 ## [0.0.8] - 2025-04-02
  - Using '*' activation is usually a bad idea as it impacts performance, using 'onStartupFinished' is a better approach.
 
