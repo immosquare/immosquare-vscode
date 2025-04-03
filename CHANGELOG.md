@@ -1,4 +1,7 @@
-## [0.0.10] - 2025-04-02
+## [0.0.11] - 2025-04-03
+- remove show(true) option for outputChannel
+
+## [0.0.10] - 2025-04-03
 - Add reloadableExtensions setting
 - Reload browsers on background
 
