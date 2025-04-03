@@ -24,8 +24,7 @@ reloaded=false
 for browser in "${browsers[@]}"; do
   if is_running "$browser"; then
     if has_open_windows "$browser"; then
-      osascript -e "tell application \"$browser\" to activate" && \
-      osascript -e "tell application \"System Events\" to keystroke \"r\" using {command down}"
+      osascript -e "tell application \"$browser\" to reload active tab of window 1"
       echo "✅ $browser: tab reloaded"
     else
       echo "⚠️ $browser is running but no windows are open"
