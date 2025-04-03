@@ -2,16 +2,24 @@ const vscode = require("vscode")
 const cp     = require("child_process")
 const path   = require("path")
 
-
-
 let outputChannel
-const RELOADABLE_EXTENSIONS = [".js", ".js.erb", ".html", ".html.erb"]
-const getFileExtension      = (fileName) => RELOADABLE_EXTENSIONS.find((ext) => fileName.endsWith(ext)) || ""
+const getReloadableExtensions = () => {
+  const config = vscode.workspace.getConfiguration("immosquare-vscode")
+  return config.get("reloadableExtensions")
+}
+
+const getFileExtension = (fileName) => {
+  const AllowedExtensions = getReloadableExtensions()
+  return AllowedExtensions.find((ext) => fileName.endsWith(ext)) || ""
+}
 
 //==============================================================================
 // Check if the file requires browser reload
 //==============================================================================
-const isReloadableFile = (fileName) => RELOADABLE_EXTENSIONS.includes(getFileExtension(fileName))
+const isReloadableFile = (fileName) => {
+  const allowedExtensions = getReloadableExtensions()
+  return allowedExtensions.includes(getFileExtension(fileName))
+}
 
 //==============================================================================
 // Reload browser

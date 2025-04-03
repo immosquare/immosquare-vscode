@@ -18,13 +18,27 @@
   ],
   "activationEvents": ["onStartupFinished"],
   "contributes": {
-    "languages":   [
+    "configuration": {
+      "title":      "Immosquare VSCode",
+      "properties": {"immosquare-vscode.reloadableExtensions": {
+          "type":        "array",
+          "default":     [
+            ".js",
+            ".js.erb",
+            ".html",
+            ".html.erb"
+          ],
+          "description": "Extensions de fichiers qui déclenchent le rechargement du navigateur",
+          "items": {"type": "string"}
+        }}
+    },
+    "languages":     [
       {
         "id":            "erb",
         "configuration": "./src/languages/erb.json"
       }
     ],
-    "snippets":    [
+    "snippets":      [
       {
         "language": "erb",
         "path":     "./src/snippets/erb.json"
@@ -34,7 +48,7 @@
         "path":     "./src/snippets/ruby.json"
       }
     ],
-    "commands":    [
+    "commands":      [
       {
         "command": "immosquare-vscode.CleanOnSave",
         "title":   "immosquare-cleaner command"
@@ -44,7 +58,7 @@
         "title":   "Reload Browser On Save"
       }
     ],
-    "keybindings": [
+    "keybindings":   [
       {
         "key":     "ctrl+9",
         "mac":     "cmd+9",
