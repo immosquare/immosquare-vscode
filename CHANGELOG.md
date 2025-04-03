@@ -1,3 +1,7 @@
+## [0.0.10] - 2025-04-02
+- Add reloadableExtensions setting
+- Reload browsers on background
+
 ## [0.0.9] - 2025-04-02
 - Improve reloadBrowserOnSave script
 
