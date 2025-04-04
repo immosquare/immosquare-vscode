@@ -62,6 +62,30 @@ All extension activities are logged in the `immosquare-vscode` output channel, a
   }
   ```
 
+## Default Browser
+
+### Choose Browsers
+- **Setting**: `immosquare-vscode.browsers`
+- **Type**: String or Array
+- **Default**: `"chrome"`
+- **Description**: Configure the default browser(s) for automatic reloading.
+- **Options**: `"chrome"`, `"firefox"`, `"safari"`
+- **Example**: To set Firefox as the default browser:
+
+  ```json
+  {
+    "immosquare-vscode.browsers": "firefox"
+  }
+  ```
+
+  Or to set multiple browsers:
+
+  ```json
+  {
+    "immosquare-vscode.browsers": ["chrome", "firefox"]
+  }
+  ```
+
 ## Snippets
 
 ### ERB Snippets

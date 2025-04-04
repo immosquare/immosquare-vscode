@@ -3,10 +3,12 @@ const cp     = require("child_process")
 const path   = require("path")
 
 let outputChannel
+let config
+let browsers
+
 const getReloadableExtensions = () => {
-  const config     = vscode.workspace.getConfiguration("immosquare-vscode")
-  const extensions = config.get("reloadableExtensions")
-  return extensions === false ? [] : extensions
+  const allowedExtensions = config.get("reloadableExtensions")
+  return allowedExtensions === false ? [] : allowedExtensions
 }
 
 const getFileExtension = (fileName) => {
@@ -30,7 +32,7 @@ const reloadBrowser = (document) => {
     const extension  = getFileExtension(document.fileName)
     const scriptPath = path.join(__dirname, "../scripts/reload-browser-darwin.sh")
 
-    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension})`)
+    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
     const result = cp.execSync(scriptPath, { encoding: "utf8" })
     
     const messages = result.toString().trim().split("\n")
@@ -50,10 +52,24 @@ const reloadBrowser = (document) => {
 }
 
 const activate = (context) => {
+  config = vscode.workspace.getConfiguration("immosquare-vscode")
+
+  //==============================================================================
+  // Setup output channel
+  //==============================================================================
   outputChannel = vscode.window.createOutputChannel("immosquare-vscode (reload")
   outputChannel.appendLine("Extension immosquare-vscode-reload activated")
-  
   context.subscriptions.push(outputChannel)
+
+  //==============================================================================
+  // get browsers
+  // allowed browsers: chrome, firefox, safari
+  //==============================================================================
+  const browsersAllowed = ["chrome", "firefox", "safari"]
+  let browsersConfig    = config.get("browsers")
+  browsersConfig        = typeof browsersConfig === "string" ? browsersConfig.split(",") : (browsersConfig || [])
+  browsers              = browsersAllowed.filter((browser) => browsersConfig.includes(browser))
+  
 
   //==============================================================================
   // Listen for save events
@@ -62,6 +78,10 @@ const activate = (context) => {
     if (isReloadableFile(document.fileName)) {
       if (process.platform !== "darwin") {
         outputChannel.appendLine("⚠️ Automatic browser reload is only available on macOS")
+        return
+      }
+      if (browsers.length === 0) {
+        outputChannel.appendLine("⚠️ No browsers configured")
         return
       }
       reloadBrowser(document)
