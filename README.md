@@ -62,9 +62,8 @@ All extension activities are logged in the `immosquare-vscode` output channel, a
   }
   ```
 
-## Default Browser
 
-### Choose Browsers
+### Choose Browsers to reload
 - **Setting**: `immosquare-vscode.browsers`
 - **Type**: String or Array
 - **Default**: `"chrome"`

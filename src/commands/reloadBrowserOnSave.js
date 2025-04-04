@@ -33,7 +33,7 @@ const reloadBrowser = (document) => {
     const scriptPath = path.join(__dirname, "../scripts/reload-browser-darwin.sh")
 
     outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
-    const result = cp.execSync(scriptPath, { encoding: "utf8" })
+    const result = cp.execSync(`${scriptPath} ${browsers.join(" ")}`, { encoding: "utf8" })
     
     const messages = result.toString().trim().split("\n")
     messages.forEach((message) => {

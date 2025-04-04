@@ -11,20 +11,57 @@ has_open_windows() {
   osascript -e "tell application \"$browser\" to count windows" | grep -q '[1-9]'
 }
 
-# List of browsers to try
-browsers=(
-  "Google Chrome"
-  "firefox"
-)
+# Map slugs to application names
+slug_to_app() {
+  case "$1" in
+    "chrome") echo "Google Chrome" ;;
+    "firefox") echo "firefox" ;;
+    "safari") echo "Safari" ;;
+    *) echo "$1" ;;
+  esac
+}
+
+# Read browsers from arguments
+browsers=()
+for arg in "$@"; do
+  browsers+=("$(slug_to_app "$arg")")
+done
 
 # Track if any browser was reloaded
 reloaded=false
 
+# Function to reload a browser
+reload_browser() {
+  local browser=$1
+  case "$browser" in
+    "Google Chrome")
+      osascript -e "tell application \"$browser\" to reload active tab of window 1"
+      ;;
+    "firefox")
+      osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' -e 'tell application "Firefox" to activate' -e 'tell application "System Events" to keystroke "r" using {command down}' -e 'delay 0.001' -e 'tell application frontApp to activate'
+      ;;
+    "Safari")
+      osascript -e "tell application \"$browser\" to reload active tab of window 1"
+      ;;
+    *)
+      echo "⚠️ Unsupported browser: $browser"
+      ;;
+  esac
+}
+
 # Try each browser
+# Afficher les arguments pour le débogage
+echo "🔍 Arguments reçus:"
+for arg in "$@"; do
+  echo "  - $arg"
+done
+echo "------------------------"
+
 for browser in "${browsers[@]}"; do
   if is_running "$browser"; then
     if has_open_windows "$browser"; then
-      osascript -e "tell application \"$browser\" to reload active tab of window 1"
+      echo "🔄 Attempting to reload $browser..."
+      reload_browser "$browser"
       echo "✅ $browser: tab reloaded"
     else
       echo "⚠️ $browser is running but no windows are open"
