@@ -1,3 +1,6 @@
+## [0.0.12] - 2025-04-03
+- Improve reloadBrowserOnSave script
+
 ## [0.0.11] - 2025-04-03
 - remove show(true) option for outputChannel
 
