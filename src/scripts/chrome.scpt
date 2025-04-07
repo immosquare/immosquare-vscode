@@ -10,7 +10,9 @@ tell application "Google Chrome"
   repeat with w in windows
     repeat with t in tabs of w
       set tabURL to URL of t
-      reload t
+      -- To "reload" and avoid the "The page that you're looking for used informatiom...
+      -- we set the URL of the tab to the tabURL instead of reloading the tab
+      set URL of t to tabURL
       set end of reloadedTabs to tabURL
     end repeat
   end repeat
