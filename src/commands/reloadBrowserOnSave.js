@@ -30,14 +30,18 @@ const isReloadableFile = (fileName) => {
 const reloadBrowser = (document) => {
   try {
     const extension  = getFileExtension(document.fileName)
-    const scriptPath = path.join(__dirname, "../scripts/reload-browser-darwin.sh")
-
-    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
-    const result = cp.execSync(`${scriptPath} ${browsers.join(" ")}`, { encoding: "utf8" })
+    const scriptsDir = path.join(__dirname, "../scripts")
     
-    const messages = result.toString().trim().split("\n")
-    messages.forEach((message) => {
-      outputChannel.appendLine(message)
+    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
+    
+    browsers.forEach((browser) => {
+      outputChannel.appendLine(`🔄 Rechargement de ${browser}...`)
+      const result = cp.execSync(`osascript "${scriptsDir}/${browser}.scpt"`, { encoding: "utf8" })
+      
+      if (result) {
+        const resultStr = result.toString().trim()
+        outputChannel.appendLine(`✅ ${browser}: ${resultStr}`)
+      }
     })
   } catch(error) {
     outputChannel.appendLine("❌ Error details:")

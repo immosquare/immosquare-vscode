@@ -1,4 +1,4 @@
-tell application "Google Chrome"
+tell application "Safari"
   set reloadedTabs to {}
   
   repeat with w in windows
@@ -10,4 +10,4 @@ tell application "Google Chrome"
   end repeat
   
   return reloadedTabs
-end tell
+end tell 
