@@ -1,3 +1,9 @@
+tell application "System Events"
+  if not (exists process "Google Chrome") then
+    return "⚠️ browser is not running !"
+  end if
+end tell
+
 tell application "Google Chrome"
   set reloadedTabs to {}
   
