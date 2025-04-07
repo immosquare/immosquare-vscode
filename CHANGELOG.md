@@ -1,3 +1,6 @@
+## [0.0.13] - 2025-04-08
+- Add urlPattern setting to filter tabs to reload
+
 ## [0.0.12] - 2025-04-03
 - Improve reloadBrowserOnSave script
 
