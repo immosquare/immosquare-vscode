@@ -31,12 +31,13 @@ const reloadBrowser = (document) => {
   try {
     const extension  = getFileExtension(document.fileName)
     const scriptsDir = path.join(__dirname, "../scripts")
+    const urlPattern = config.get("urlPattern") || ""
     
     outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
     
     browsers.forEach((browser) => {
       outputChannel.appendLine(`🔄 Rechargement de ${browser}...`)
-      const result = cp.execSync(`osascript "${scriptsDir}/${browser}.scpt"`, { encoding: "utf8" })
+      const result = cp.execSync(`osascript "${scriptsDir}/${browser}.scpt" "${urlPattern}"`, { encoding: "utf8" })
       
       if (result) {
         const resultStr = result.toString().trim()
