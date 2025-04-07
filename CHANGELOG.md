@@ -1,3 +1,6 @@
+## [0.0.14] - 2025-04-08
+- improve relaodBehevior
+
 ## [0.0.13] - 2025-04-08
 - Add urlPattern setting to filter tabs to reload
 
