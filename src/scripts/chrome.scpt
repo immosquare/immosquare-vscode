@@ -8,6 +8,7 @@ on run argv
     if not (exists process "Google Chrome") then
       return "⚠️ browser is not running !"
     end if
+    set currentApp to name of first application process whose frontmost is true
   end tell
   
   tell application "Google Chrome"
@@ -17,14 +18,13 @@ on run argv
       repeat with t in tabs of w
         set tabURL to URL of t
         if urlPattern is "" or tabURL contains urlPattern then
-          -- To "reload" and avoid the "The page that you're looking for used informatiom...
-          -- we set the URL of the tab to the tabURL instead of reloading the tab
-          set URL of t to tabURL
           set end of reloadedTabs to tabURL
+          reload t
         end if
       end repeat
     end repeat
-    
-    return reloadedTabs
   end tell
+  
+  tell application currentApp to activate
+  return reloadedTabs
 end run
