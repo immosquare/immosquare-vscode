@@ -43,6 +43,11 @@
           "default":     ["chrome"],
           "description": "Configure which browsers should be reloaded when a file is saved",
           "items": {"type": "string"}
+        },
+        "immosquare-vscode.urlPattern": {
+          "type":        "string",
+          "default":     "",
+          "description": "Configure the URL pattern to filter tabs to reload"
         }
       }
     },
