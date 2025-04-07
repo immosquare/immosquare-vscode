@@ -35,7 +35,7 @@ reload_browser() {
   local browser=$1
   case "$browser" in
     "Google Chrome")
-      osascript -e "tell application \"$browser\" to reload active tab of window 1"
+      osascript "$(dirname "$0")/chrome.scpt"
       ;;
     "firefox")
       osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' -e 'tell application "Firefox" to activate' -e 'tell application "System Events" to keystroke "r" using {command down}' -e 'delay 0.001' -e 'tell application frontApp to activate'
