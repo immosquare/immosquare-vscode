@@ -1,3 +1,6 @@
+## [0.0.15] - 2025-04-08
+- Use default shell user for CleanOnSave instead of /bin/bash
+
 ## [0.0.14] - 2025-04-08
 - improve relaodBehevior
 
