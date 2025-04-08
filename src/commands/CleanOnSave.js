@@ -18,7 +18,7 @@ const checkGemInstallation = () => new Promise((resolve, reject) => {
   // -l : Load the user's profile
   // -c : Execute the command
   //==============================================================================
-  const childProcess = spawn("/bin/bash", ["-l", "-c", shellCommand], {
+  const childProcess = spawn(process.env.SHELL || "/bin/bash", ["-l", "-c", shellCommand], {
     cwd: workspacePath,
     env: { ...process.env}
   })
@@ -52,7 +52,7 @@ const runCleaner = (filePath) => new Promise((resolve, reject) => {
   // -c : Execute the command
   // FORCE_COLOR: "false" : Disable colors from output...(ANSI colors are not supported in vscode yet)
   //==============================================================================
-  const childProcess = spawn("/bin/bash", ["-l", "-c", shellCommand], {
+  const childProcess = spawn(process.env.SHELL || "/bin/bash", ["-l", "-c", shellCommand], {
     cwd: workspacePath,
     env: { ...process.env, FORCE_COLOR: "false" }
   })
