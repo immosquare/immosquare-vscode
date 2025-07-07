@@ -6,6 +6,7 @@ VSCode extension to enhance your development workflow with:
 - [ERB snippets](#erb-snippets)
 - [Ruby snippets](#ruby-snippets)
 - [Custom keyboard shortcuts](#keyboard-shortcuts)
+- [Raw credentials generation](#raw-credentials-generation)
 
 ## Code Cleaning
 
@@ -64,6 +65,10 @@ The extension automatically reloads browsers when you save specific files.
 | `ctrl+r` / `cmd+r`             | editor.action.smartSelect.expand         | editorTextFocus                       |
 | `shift+ctrl+r` / `shift+cmd+r` | editor.action.smartSelect.shrink         | editorTextFocus                       |
 | `ctrl+3` / `cmd+3`             | editor.action.insertSnippet              | editorHasSelection                    |
+
+## Raw credentials generation
+
+The extension automatically generates a `raw.txt` file in the root of your project with all your credentials decrypted.
 
 
 ## Testing
