@@ -1,0 +1,66 @@
+# immosquare VSCode Extension - Règles et Contexte
+
+## Contexte du Projet
+Cette extension VSCode/Cursor est développée pour optimiser le workflow de développement chez immosquare, une entreprise spécialisée dans l'immobilier.
+
+## Objectifs de l'Extension
+- **Automatiser le nettoyage de code** via immosquare-cleaner (Rubocop, ESLint, Prettier)
+- **Accélérer le développement** avec des snippets ERB et Ruby personnalisés
+- **Améliorer l'expérience utilisateur** avec des raccourcis clavier optimisés
+- **Faciliter le développement web** avec rechargement automatique des navigateurs
+
+## Stack Technique
+- **Backend**: Ruby on Rails avec ERB templates
+- **Frontend**: JavaScript, HTML, CSS
+- **Outils de qualité**: Rubocop, ESLint, Prettier
+- **Extension**: Node.js avec VSCode Extension API
+
+## Conventions de Code
+
+### Structure du Projet
+```
+src/
+├── commands/          # Commandes VSCode
+├── scripts/           # Scripts utilitaires
+├── snippets/          # Snippets ERB et Ruby
+├── languages/         # Configuration des langages
+└── immosquare-vscode.js  # Point d'entrée
+```
+
+### Nommage
+- **Fichiers**: kebab-case (ex: `immosquare-vscode.js`)
+- **Commandes**: PascalCase avec préfixe `immosquare-vscode.` (ex: `CleanOnSave`)
+- **Snippets**: Préfixes courts et mnémoniques (ex: `ct` pour content_tag)
+
+
+## Workflow immosquare
+
+### Développement Rails
+1. **Création de vues ERB** avec snippets optimisés
+2. **Nettoyage automatique** à la sauvegarde
+3. **Rechargement navigateur** pour les fichiers frontend
+4. **Logging** avec immosquare logger
+
+### Bonnes Pratiques
+- Toujours utiliser les snippets ERB pour la cohérence
+- Laisser immosquare-cleaner gérer le formatage
+- Utiliser les raccourcis clavier pour la productivité
+- Configurer les extensions rechargées selon le projet
+
+## Configuration Recommandée
+```json
+{
+  "immosquare-vscode.reloadableExtensions": [".js", ".js.erb", ".html", ".html.erb"],
+  "immosquare-vscode.browsers": ["chrome"],
+  "immosquare-vscode.urlPattern": "immosquare.me"
+}
+```
+
+## Dépendances
+- `immosquare-cleaner` gem (requis pour le nettoyage)
+- VSCode/Cursor 1.96.0+
+
+## Tests et Développement
+- Utiliser `fn+f5` pour tester l'extension
+- Vérifier la compatibilité avec les projets Rails immosquare
+- Maintenir la cohérence avec les standards de l'entreprise 
