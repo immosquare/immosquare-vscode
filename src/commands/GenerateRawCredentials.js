@@ -7,7 +7,7 @@ const vscode       = require("vscode")
 const generateRawFile = () => {
   try {
     const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || process.cwd()
-    execSync("bundle exec rake dev:export_credentials", {
+    execSync("bundle exec rake credentials:export", {
       cwd:   workspaceRoot,
       stdio: "ignore"
     })
