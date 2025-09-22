@@ -1,4 +1,2 @@
 node_modules
 *.vsix
-.vscode/extensions.json
-.vscode/settings.json
