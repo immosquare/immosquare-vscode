@@ -1,3 +1,6 @@
+## [0.0.17] - 2025-10-09
+- Update gems + Remove GenerateRawCredentials
+
 ## [0.0.16] - 2025-07-07
 - Add GenerateRawCredentials command
 
