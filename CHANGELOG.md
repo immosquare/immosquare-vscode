@@ -1,3 +1,6 @@
+## [0.0.18] - 2025-10-29
+- Add Procfile language support
+
 ## [0.0.17] - 2025-10-09
 - Update gems + Remove GenerateRawCredentials
 
