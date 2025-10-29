@@ -55,6 +55,19 @@
       {
         "id":            "erb",
         "configuration": "./src/languages/erb.json"
+      },
+      {
+        "id":            "procfile",
+        "aliases":       ["Procfile"],
+        "filenames":     ["Procfile", "Procfile.dev", "Procfile.local"],
+        "configuration": "./src/languages/procfile.json"
+      }
+    ],
+    "grammars":      [
+      {
+        "language":   "procfile",
+        "scopeName":  "source.procfile",
+        "path":       "./src/languages/procfile.tmLanguage.json"
       }
     ],
     "snippets":      [

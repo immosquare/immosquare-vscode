@@ -1,0 +1,31 @@
+{
+  "scopeName":  "source.procfile",
+  "name":       "Procfile",
+  "fileTypes":  ["Procfile"],
+  "patterns":   [
+    {"include": "#comments"},
+    {"include": "#process-definition"}
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name":  "comment.line.number-sign.procfile",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "process-definition": {
+      "patterns": [
+        {
+          "match":    "^([a-zA-Z0-9_-]+)(:)\\s*(.*)$",
+          "captures": {
+            "1": {"name": "variable.other.procfile"},
+            "2": {"name": "punctuation.separator.key-value.procfile"},
+            "3": {"name": "meta.embedded.line.shell"}
+          }
+        }
+      ]
+    }
+  }
+}
