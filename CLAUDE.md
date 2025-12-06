@@ -8,6 +8,7 @@ This is a VSCode extension for immosquare, designed to enhance the development w
 - Automatic code cleaning via the immosquare-cleaner gem
 - Browser auto-reload for frontend files
 - ERB and Ruby snippets
+- Procfile syntax highlighting
 - Custom keyboard shortcuts
 
 ## Development Commands
@@ -63,7 +64,9 @@ src/
 │   ├── erb.json                  # ERB snippets (ct, er, if, etc.)
 │   └── ruby.json                 # Ruby snippets
 └── languages/
-    └── erb.json                  # ERB language configuration
+    ├── erb.json                  # ERB language configuration
+    ├── procfile.json             # Procfile language configuration
+    └── procfile.tmLanguage.json  # Procfile TextMate grammar for syntax highlighting
 ```
 
 ### Key Architectural Patterns
@@ -92,6 +95,7 @@ src/
 ### Critical Implementation Details
 
 **CleanOnSave Command:**
+- Triggers automatically on every `onDidSaveTextDocument` event (not file-type filtered)
 - Checks gem installation status asynchronously on activation
 - Only runs cleaner if gem is installed (shows warning otherwise)
 - Uses workspace-relative paths for output messages
