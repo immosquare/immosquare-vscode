@@ -1,8 +1,7 @@
+node_modules
+*.vsix
+
 ##============================================================##
 ## Claude personal settings
 ##============================================================##
 /.claude/settings.local.json
-
-
-node_modules
-*.vsix
