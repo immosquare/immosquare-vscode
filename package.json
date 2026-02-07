@@ -1,65 +1,71 @@
 {
-  "name":             "immosquare-vscode",
-  "publisher":        "immosquare",
-  "displayName":      "immosquare-vscode",
-  "description":      "immosquare-vscode snippets & keybindings",
-  "version":          "0.0.18",
-  "icon":             "icon.png",
-  "license":          "MIT",
-  "main":             "./src/immosquare-vscode.js",
-  "engines": {"vscode": "^1.96.0"},
+  "name": "immosquare-vscode",
+  "publisher": "immosquare",
+  "displayName": "immosquare-vscode",
+  "description": "immosquare-vscode snippets & keybindings",
+  "version": "0.0.18",
+  "icon": "icon.png",
+  "license": "MIT",
+  "main": "./src/immosquare-vscode.js",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
   "repository": {
     "type": "git",
-    "url":  "https://github.com/immosquare/immosquare-vscode.git"
+    "url": "https://github.com/immosquare/immosquare-vscode.git"
   },
-  "categories":       [
+  "categories": [
     "Snippets",
     "Other"
   ],
   "activationEvents": ["onStartupFinished"],
   "contributes": {
     "configuration": {
-      "title":      "Immosquare VSCode",
+      "title": "Immosquare VSCode",
       "properties": {
         "immosquare-vscode.reloadableExtensions": {
-          "type":        [
+          "type": [
             "array",
             "boolean"
           ],
-          "default":     [
+          "default": [
             ".js",
             ".js.erb",
             ".html",
             ".html.erb"
           ],
           "description": "Configure which file extensions should trigger a browser reload when saved",
-          "items": {"type": "string"}
+          "items": {
+            "type": "string"
+          }
         },
         "immosquare-vscode.browsers": {
-          "type":        [
+          "type": [
             "array",
             "string"
           ],
-          "default":     ["chrome"],
+          "default": ["chrome"],
           "description": "Configure which browsers should be reloaded when a file is saved",
-          "items": {"type": "string"}
+          "items": {
+            "type": "string"
+          }
         },
         "immosquare-vscode.urlPattern": {
-          "type":        "string",
-          "default":     "",
+          "type": "string",
+          "default": "",
           "description": "Configure the URL pattern to filter tabs to reload"
         }
       }
     },
-    "languages":     [
+    "languages": [
       {
-        "id":            "erb",
+        "id": "erb",
         "configuration": "./src/languages/erb.json"
       },
       {
-        "id":            "procfile",
-        "aliases":       ["Procfile"],
-        "filenames":     [
+        "id": "procfile",
+        "aliases": ["Procfile"],
+        "filenames": [
           "Procfile",
           "Procfile.dev",
           "Procfile.local"
@@ -67,79 +73,81 @@
         "configuration": "./src/languages/procfile.json"
       }
     ],
-    "grammars":      [
+    "grammars": [
       {
-        "language":  "procfile",
+        "language": "procfile",
         "scopeName": "source.procfile",
-        "path":      "./src/languages/procfile.tmLanguage.json"
+        "path": "./src/languages/procfile.tmLanguage.json"
       }
     ],
-    "snippets":      [
+    "snippets": [
       {
         "language": "erb",
-        "path":     "./src/snippets/erb.json"
+        "path": "./src/snippets/erb.json"
       },
       {
         "language": "ruby",
-        "path":     "./src/snippets/ruby.json"
+        "path": "./src/snippets/ruby.json"
       }
     ],
-    "commands":      [
+    "commands": [
       {
         "command": "immosquare-vscode.CleanOnSave",
-        "title":   "immosquare-cleaner command"
+        "title": "immosquare-cleaner command"
       },
       {
         "command": "immosquare-vscode.reloadBrowserOnSave",
-        "title":   "Reload Browser On Save"
+        "title": "Reload Browser On Save"
       }
     ],
-    "keybindings":   [
+    "keybindings": [
       {
-        "key":     "ctrl+9",
-        "mac":     "cmd+9",
+        "key": "ctrl+9",
+        "mac": "cmd+9",
         "command": "editor.action.outdentLines",
-        "when":    "editorTextFocus && !editorReadonly"
+        "when": "editorTextFocus && !editorReadonly"
       },
       {
-        "key":     "ctrl+0",
-        "mac":     "cmd+0",
+        "key": "ctrl+0",
+        "mac": "cmd+0",
         "command": "editor.action.indentLines",
-        "when":    "editorTextFocus && !editorReadonly"
+        "when": "editorTextFocus && !editorReadonly"
       },
       {
-        "key":     "shift+ctrl+f",
-        "mac":     "shift+cmd+f",
+        "key": "shift+ctrl+f",
+        "mac": "shift+cmd+f",
         "command": "search.action.openNewEditor"
       },
       {
-        "key":     "ctrl+k",
-        "mac":     "cmd+k",
+        "key": "ctrl+k",
+        "mac": "cmd+k",
         "command": "workbench.output.action.clearOutput"
       },
       {
-        "key":     "ctrl+k",
-        "mac":     "cmd+k",
+        "key": "ctrl+k",
+        "mac": "cmd+k",
         "command": "workbench.action.terminal.clear"
       },
       {
-        "key":     "ctrl+r",
-        "mac":     "cmd+r",
+        "key": "ctrl+r",
+        "mac": "cmd+r",
         "command": "editor.action.smartSelect.expand",
-        "when":    "editorTextFocus"
+        "when": "editorTextFocus"
       },
       {
-        "key":     "shift+ctrl+r",
-        "mac":     "shift+cmd+r",
+        "key": "shift+ctrl+r",
+        "mac": "shift+cmd+r",
         "command": "editor.action.smartSelect.shrink",
-        "when":    "editorTextFocus"
+        "when": "editorTextFocus"
       },
       {
-        "key":     "ctrl+3",
-        "mac":     "cmd+3",
+        "key": "ctrl+3",
+        "mac": "cmd+3",
         "command": "editor.action.insertSnippet",
-        "when":    "editorHasSelection",
-        "args": {"snippet": "\"#{$TM_SELECTED_TEXT}\""}
+        "when": "editorHasSelection",
+        "args": {
+          "snippet": "\"#{$TM_SELECTED_TEXT}\""
+        }
       }
     ]
   }
