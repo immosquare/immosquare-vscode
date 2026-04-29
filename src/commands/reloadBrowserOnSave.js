@@ -2,95 +2,76 @@ const vscode = require("vscode")
 const cp     = require("child_process")
 const path   = require("path")
 
+const browsersAllowed = ["chrome", "firefox", "safari"]
 let outputChannel
-let config
-let browsers
+
+const getConfig = () => vscode.workspace.getConfiguration("immosquare-vscode")
 
 const getReloadableExtensions = () => {
-  const allowedExtensions = config.get("reloadableExtensions")
-  return allowedExtensions === false ? [] : allowedExtensions
+  const exts = getConfig().get("reloadableExtensions")
+  return exts === false ? [] : exts
 }
 
-const getFileExtension = (fileName) => {
-  const allowedExtensions = getReloadableExtensions()
-  return allowedExtensions.find((ext) => fileName.endsWith(ext)) || ""
+const getFileExtension = (fileName) => getReloadableExtensions().find((ext) => fileName.endsWith(ext)) || ""
+
+const getActiveBrowsers = () => {
+  let browsersConfig = getConfig().get("browsers")
+  browsersConfig     = typeof browsersConfig === "string" ? browsersConfig.split(",") : (browsersConfig || [])
+  return browsersAllowed.filter((browser) => browsersConfig.includes(browser))
 }
 
-//==============================================================================
-// Check if the file requires browser reload
-//==============================================================================
-const isReloadableFile = (fileName) => {
-  const allowedExtensions = getReloadableExtensions()
-  return allowedExtensions.includes(getFileExtension(fileName))
-}
-
-//==============================================================================
+//============================================================//
 // Reload browser
-//==============================================================================
-const reloadBrowser = (document) => {
-  try {
-    const extension  = getFileExtension(document.fileName)
-    const scriptsDir = path.join(__dirname, "../scripts")
-    const urlPattern = config.get("urlPattern") || ""
-    
-    outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
-    
-    browsers.forEach((browser) => {
-      outputChannel.appendLine(`🔄 Rechargement de ${browser}...`)
-      const result = cp.execSync(`osascript "${scriptsDir}/${browser}.scpt" "${urlPattern}"`, { encoding: "utf8" })
-      
+//============================================================//
+const reloadBrowser = (document, browsers) => {
+  const extension  = getFileExtension(document.fileName)
+  const scriptsDir = path.join(__dirname, "../scripts")
+  const urlPattern = getConfig().get("urlPattern") || ""
+
+  outputChannel.appendLine(`🖥️ Browser reloading required for (${extension}) on ${browsers}`)
+
+  browsers.forEach((browser) => {
+    outputChannel.appendLine(`🔄 Reloading ${browser}...`)
+    cp.execFile("osascript", [path.join(scriptsDir, `${browser}.scpt`), urlPattern], (error, stdout, stderr) => {
+      if (error) {
+        outputChannel.appendLine(`❌ ${browser} error: ${error.message}`)
+        if (stdout) outputChannel.appendLine(`stdout: ${stdout.trim()}`)
+        if (stderr) outputChannel.appendLine(`stderr: ${stderr.trim()}`)
+        return
+      }
+      const result = stdout.toString().trim()
       if (result) {
-        const resultStr = result.toString().trim()
-        outputChannel.appendLine(`✅ ${browser}: ${resultStr}`)
+        outputChannel.appendLine(`✅ ${browser}: ${result}`)
       }
     })
-  } catch(error) {
-    outputChannel.appendLine("❌ Error details:")
-    if (error.stdout) {
-      outputChannel.appendLine(`stdout: ${error.stdout.trim()}`)
-    }
-    if (error.stderr) {
-      outputChannel.appendLine(`stderr: ${error.stderr.trim()}`)
-    }
-    outputChannel.appendLine(`Error message: ${error.message}`)
-  }
+  })
 }
 
 const activate = (context) => {
-  config = vscode.workspace.getConfiguration("immosquare-vscode")
-
-  //==============================================================================
+  //============================================================//
   // Setup output channel
-  //==============================================================================
-  outputChannel = vscode.window.createOutputChannel("immosquare-vscode (reload")
+  //============================================================//
+  outputChannel = vscode.window.createOutputChannel("immosquare-vscode (reload)")
   outputChannel.appendLine("Extension immosquare-vscode-reload activated")
   context.subscriptions.push(outputChannel)
 
-  //==============================================================================
-  // get browsers
-  // allowed browsers: chrome, firefox, safari
-  //==============================================================================
-  const browsersAllowed = ["chrome", "firefox", "safari"]
-  let browsersConfig    = config.get("browsers")
-  browsersConfig        = typeof browsersConfig === "string" ? browsersConfig.split(",") : (browsersConfig || [])
-  browsers              = browsersAllowed.filter((browser) => browsersConfig.includes(browser))
-  
-
-  //==============================================================================
+  //============================================================//
   // Listen for save events
-  //==============================================================================
-  let saveListener = vscode.workspace.onDidSaveTextDocument((document) => {
-    if (isReloadableFile(document.fileName)) {
-      if (process.platform !== "darwin") {
-        outputChannel.appendLine("⚠️ Automatic browser reload is only available on macOS")
-        return
-      }
-      if (browsers.length === 0) {
-        outputChannel.appendLine("⚠️ No browsers configured")
-        return
-      }
-      reloadBrowser(document)
+  //============================================================//
+  const saveListener = vscode.workspace.onDidSaveTextDocument((document) => {
+    if (!getFileExtension(document.fileName)) {
+      return
     }
+    if (process.platform !== "darwin") {
+      outputChannel.appendLine("⚠️ Automatic browser reload is only available on macOS")
+      return
+    }
+    const browsers = getActiveBrowsers()
+    if (browsers.length === 0) {
+      outputChannel.appendLine("⚠️ No browsers configured")
+      return
+    }
+    reloadBrowser(document, browsers)
   })
 
   context.subscriptions.push(saveListener)
@@ -106,4 +87,4 @@ const deactivate = () => {
 module.exports = {
   activate,
   deactivate
-} 
+}
