@@ -50,21 +50,21 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 
 ## Snippets Reference
 
-**ERB** (`src/snippets/erb.json`): `ct` (content_tag), `er` (ruby tag), `pc` (comment), `pe` (print equal), `if`, `else`, `end`, `lt` (link_tag), `it` (image_tag), `il` (immosquare logger), `partial`, `simple_form`
+**ERB** (`src/snippets/erb.json`): `ct` (content_tag), `er` (ruby tag), `pc` (comment), `pe` (print equal), `if`, `else`, `elsif`, `end`, `lt` (link_tag), `it` (image_tag), `il` (immosquare logger), `partial`, `simple_form`
 
 **Ruby** (`src/snippets/ruby.json`): `il` (immosquare logger)
 
 ## Keybindings
 
-| Mac | Linux/Win | Action |
-|-----|-----------|--------|
-| `cmd+9` | `ctrl+9` | Outdent lines |
-| `cmd+0` | `ctrl+0` | Indent lines |
-| `shift+cmd+f` | `shift+ctrl+f` | Open search editor |
-| `cmd+k` | `ctrl+k` | Clear output/terminal |
-| `cmd+r` | `ctrl+r` | Expand selection |
-| `shift+cmd+r` | `shift+ctrl+r` | Shrink selection |
-| `cmd+3` | `ctrl+3` | Wrap selection in `"#{...}"` |
+| Mac           | Linux/Win      | Action                       |
+| ------------- | -------------- | ---------------------------- |
+| `cmd+9`       | `ctrl+9`       | Outdent lines                |
+| `cmd+0`       | `ctrl+0`       | Indent lines                 |
+| `shift+cmd+f` | `shift+ctrl+f` | Open search editor           |
+| `cmd+k`       | `ctrl+k`       | Clear output/terminal        |
+| `cmd+r`       | `ctrl+r`       | Expand selection             |
+| `shift+cmd+r` | `shift+ctrl+r` | Shrink selection             |
+| `cmd+3`       | `ctrl+3`       | Wrap selection in `"#{...}"` |
 
 ## Important Notes
 

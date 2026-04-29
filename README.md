@@ -3,6 +3,7 @@
 VSCode extension to enhance your development workflow with:
 - [Code Cleaning](#code-cleaning)
 - [Browser Reloading](#browser-reloading)
+- [Procfile Language Support](#procfile-language-support)
 - [ERB snippets](#erb-snippets)
 - [Ruby snippets](#ruby-snippets)
 - [Custom keyboard shortcuts](#keyboard-shortcuts)
@@ -17,6 +18,8 @@ The extension automatically runs the [immosquare-cleaner](https://github.com/imm
 
 The extension automatically reloads browsers when you save specific files.
 
+> **macOS only.** Browser reload uses AppleScript via `osascript`; it is silently skipped on Linux/Windows.
+
 ### Configuration
 
 ```json
@@ -27,9 +30,13 @@ The extension automatically reloads browsers when you save specific files.
 }
 ```
 
-- `reloadableExtensions`: File extensions to watch (default: [".js", ".js.erb", ".html", ".html.erb"])
-- `browsers`: Browsers to reload (default: ["chrome"])
+- `reloadableExtensions`: File extensions to watch (default: [".js", ".js.erb", ".html", ".html.erb"]). Set to `false` to disable.
+- `browsers`: Browsers to reload (allowed: `chrome`, `firefox`, `safari` — default: ["chrome"])
 - `urlPattern` (optional): Pattern to filter URLs to reload, only reloads tabs containing this pattern
+
+## Procfile Language Support
+
+Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procfile.dev`, and `Procfile.local`.
 
 ## ERB Snippets
 | Prefix        | Description       |
@@ -40,6 +47,7 @@ The extension automatically reloads browsers when you save specific files.
 | `pe`          | print equal tag   |
 | `if`          | ERB if / end      |
 | `else`        | ERB else tag      |
+| `elsif`       | ERB elsif tag     |
 | `end`         | ERB end tag       |
 | `lt`          | ERB link tag      |
 | `it`          | Image tag         |
