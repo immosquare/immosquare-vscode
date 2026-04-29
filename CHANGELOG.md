@@ -1,3 +1,9 @@
+## [0.0.19] - 2026-04-28
+- Switch browser reload to async execFile (no more save freeze, no shell-injection via urlPattern)
+- Read reload config (extensions, browsers, urlPattern) on each save so changes apply without reloading the window
+- Fix race condition where the first saves after activation could wrongly report immosquare-cleaner as missing
+- Extract cleanFile helper shared by the manual command and the save listener
+
 ## [0.0.18] - 2025-10-29
 - Add Procfile language support
 
