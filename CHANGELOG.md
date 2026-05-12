@@ -1,3 +1,16 @@
+## [0.0.20] - 2026-05-11
+- Add Ruby `bc` snippet that inserts a `##====##` block comment with the cursor focused on the comment text
+- Enable `tabCompletion=onlySnippets` and `quickSuggestions` in comments for Ruby files so `bc`+Tab inserts directly
+- Skip save listeners on non-file documents (settings, untitled, output channels, diff views) to stop spurious cleaner runs
+- Serialize concurrent saves on the same file to prevent overlapping cleaner writes
+- Pass the cleaner target path via `IMS_CLEANER_FILE` env var instead of shell interpolation (safe against quotes, `$`, backticks)
+- Share a single `immosquare-vscode` output channel between CleanOnSave and browser reload
+- Declare ERB via explicit file extensions instead of an empty configuration file
+- Trim comma-separated `browsers` config values and require an actual array for `reloadableExtensions`
+- Skip the cleaner warning silently when no workspace folder is open
+- Fix snippet description typos ("egual" → "equal", "Loggger" → "Logger")
+- Tighten packaging: drop `.DS_Store`, `.ruby-lsp/`, `*.vsix`, and dev docs from the published `.vsix`
+
 ## [0.0.19] - 2026-04-28
 - Switch browser reload to async execFile (no more save freeze, no shell-injection via urlPattern)
 - Read reload config (extensions, browsers, urlPattern) on each save so changes apply without reloading the window
