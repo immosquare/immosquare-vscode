@@ -1,5 +1,7 @@
 node_modules
 *.vsix
+.DS_Store
+.ruby-lsp/
 
 ##============================================================##
 ## Claude personal settings

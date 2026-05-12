@@ -1,8 +1,17 @@
 .vscode/**
 .vscode-test/**
 .gitignore
+.gitattributes
 node_modules
 Gemfile
 Gemfile.lock
 .ruby-version
 .ruby-gemset
+.ruby-lsp/**
+.DS_Store
+**/.DS_Store
+*.vsix
+CLAUDE.md
+AGENTS.md
+.rules
+.claude/**
