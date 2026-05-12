@@ -56,9 +56,10 @@ Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procf
 | `simple_form` | simple_form       |
 
 ## Ruby Snippets
-| Prefix   | Description       |
-| -------- | ----------------- |
-| `il`     | immosquare logger |
+| Prefix      | Description                              |
+| ----------- | ---------------------------------------- |
+| `il`        | immosquare logger                        |
+| `bc`        | block comment with `##====##` separators |
 
 ## Keyboard Shortcuts
 

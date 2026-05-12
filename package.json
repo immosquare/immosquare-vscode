@@ -18,6 +18,14 @@
   ],
   "activationEvents": ["onStartupFinished"],
   "contributes": {
+    "configurationDefaults": {"[ruby]": {
+        "editor.quickSuggestions": {
+          "other":    "on",
+          "comments": "on",
+          "strings":  "off"
+        },
+        "editor.tabCompletion":    "onlySnippets"
+      }},
     "configuration": {
       "title":      "Immosquare VSCode",
       "properties": {
@@ -51,10 +59,15 @@
         }
       }
     },
-    "languages":     [
+    "languages":             [
       {
-        "id":            "erb",
-        "configuration": "./src/languages/erb.json"
+        "id":         "erb",
+        "aliases":    ["ERB"],
+        "extensions": [
+          ".erb",
+          ".html.erb",
+          ".js.erb"
+        ]
       },
       {
         "id":            "procfile",
@@ -67,14 +80,14 @@
         "configuration": "./src/languages/procfile.json"
       }
     ],
-    "grammars":      [
+    "grammars":              [
       {
         "language":  "procfile",
         "scopeName": "source.procfile",
         "path":      "./src/languages/procfile.tmLanguage.json"
       }
     ],
-    "snippets":      [
+    "snippets":              [
       {
         "language": "erb",
         "path":     "./src/snippets/erb.json"
@@ -84,7 +97,7 @@
         "path":     "./src/snippets/ruby.json"
       }
     ],
-    "commands":      [
+    "commands":              [
       {
         "command": "immosquare-vscode.CleanOnSave",
         "title":   "immosquare-cleaner command"
@@ -94,7 +107,7 @@
         "title":   "Reload Browser On Save"
       }
     ],
-    "keybindings":   [
+    "keybindings":           [
       {
         "key":     "ctrl+9",
         "mac":     "cmd+9",

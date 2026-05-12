@@ -2,6 +2,16 @@
   "immosquare logger": {
     "prefix":      "il",
     "body":        "ImmosquareLogger.info ${1:data}",
-    "description": "Immosquare Loggger"
+    "description": "Immosquare Logger"
+  },
+  "block comment": {
+    "prefix":      "bc",
+    "body":        [
+      "##============================================================##",
+      "## $1",
+      "##============================================================##",
+      "$0"
+    ],
+    "description": "Bloc de commentaire avec séparateurs ##"
   }
 }
