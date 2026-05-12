@@ -17,7 +17,7 @@
   "pe": {
     "prefix":      "pe",
     "body":        "<%= $0 %>",
-    "description": "print egual tag"
+    "description": "print equal tag"
   },
   "if": {
     "prefix":      "if",
@@ -52,7 +52,7 @@
   "immosquare logger": {
     "prefix":      "il",
     "body":        "<% ImmosquareLogger.info ${1:data} %>",
-    "description": "immosquare Loggger"
+    "description": "immosquare Logger"
   },
   "partial": {
     "prefix":      "partial",
