@@ -9,15 +9,15 @@ const getConfig = () => vscode.workspace.getConfiguration("immosquare-vscode")
 
 const getReloadableExtensions = () => {
   const exts = getConfig().get("reloadableExtensions")
-  return exts === false ? [] : exts
+  return Array.isArray(exts) ? exts : []
 }
 
 const getFileExtension = (fileName) => getReloadableExtensions().find((ext) => fileName.endsWith(ext)) || ""
 
 const getActiveBrowsers = () => {
-  let browsersConfig = getConfig().get("browsers")
-  browsersConfig     = typeof browsersConfig === "string" ? browsersConfig.split(",") : (browsersConfig || [])
-  return browsersAllowed.filter((browser) => browsersConfig.includes(browser))
+  const raw      = getConfig().get("browsers")
+  const browsers = typeof raw === "string" ? raw.split(",").map((s) => s.trim()) : (Array.isArray(raw) ? raw : [])
+  return browsersAllowed.filter((browser) => browsers.includes(browser))
 }
 
 //============================================================//
@@ -47,21 +47,17 @@ const reloadBrowser = (document, browsers) => {
   })
 }
 
-const activate = (context) => {
-  //============================================================//
-  // Setup output channel
-  //============================================================//
-  outputChannel = vscode.window.createOutputChannel("immosquare-vscode (reload)")
+const activate = (context, sharedOutputChannel) => {
+  outputChannel = sharedOutputChannel
   outputChannel.appendLine("Extension immosquare-vscode-reload activated")
-  context.subscriptions.push(outputChannel)
 
   //============================================================//
-  // Listen for save events
+  // Listen for save events. Skip non-file documents (settings,
+  // untitled, output channels, diff views…).
   //============================================================//
   const saveListener = vscode.workspace.onDidSaveTextDocument((document) => {
-    if (!getFileExtension(document.fileName)) {
-      return
-    }
+    if (document.uri.scheme !== "file") return
+    if (!getFileExtension(document.fileName)) return
     if (process.platform !== "darwin") {
       outputChannel.appendLine("⚠️ Automatic browser reload is only available on macOS")
       return
@@ -78,10 +74,7 @@ const activate = (context) => {
 }
 
 const deactivate = () => {
-  if (outputChannel) {
-    outputChannel.dispose()
-    outputChannel = null
-  }
+  outputChannel = null
 }
 
 module.exports = {
