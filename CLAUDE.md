@@ -25,16 +25,18 @@ npx vsce publish                    # publish to marketplace (requires publisher
 ## Architecture
 
 ### Command Module Pattern
-- Entry point: `src/immosquare-vscode.js` orchestrates command lifecycle
-- Each command module exports `activate(context)` and `deactivate()` functions
+- Entry point: `src/immosquare-vscode.js` orchestrates command lifecycle and owns the shared output channel
+- Each command module exports `activate(context, outputChannel)` and `deactivate()` functions
 - Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`
 - Activation: `onStartupFinished` event (see `package.json`)
 
 ### CleanOnSave Implementation
-- Listens to `onDidSaveTextDocument` for all file types
+- Listens to `onDidSaveTextDocument`, but only for `file://` scheme documents inside a workspace
 - Checks gem availability on activation via `bundle info immosquare-cleaner`
 - Spawns shell with `-l` flag to load user profile (supports RVM/rbenv/asdf)
 - Uses `FORCE_COLOR: "false"` env var to disable ANSI colors in output
+- Target file path is passed via `IMS_CLEANER_FILE` env var (safe against quotes / `$` / backticks in paths)
+- Concurrent saves of the same file are serialized via an in-flight `Map` to prevent overlapping writes
 
 ### Browser Reload Implementation
 - macOS-only (uses AppleScript via `osascript`)
@@ -70,4 +72,4 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 
 - Requires `immosquare-cleaner` gem in project's Gemfile for code cleaning
 - Browser reload is macOS-only (AppleScript dependency)
-- Each command has its own output channel for debugging
+- Both commands share a single `immosquare-vscode` output channel for debugging, owned by the entry point
