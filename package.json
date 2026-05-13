@@ -105,8 +105,50 @@
       {
         "command": "immosquare-vscode.reloadBrowserOnSave",
         "title":   "Reload Browser On Save"
+      },
+      {
+        "command": "immosquare-vscode.copyRefLlmCli",
+        "title":   "immosquare: copy as @path#Lxx-Lyy"
+      },
+      {
+        "command": "immosquare-vscode.copyRefWithCode",
+        "title":   "immosquare: copy as @path#Lxx-Lyy + code block"
+      },
+      {
+        "command": "immosquare-vscode.copyFilePath",
+        "title":   "immosquare: copy as @path"
       }
     ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "immosquare-vscode.copyRefLlmCli",
+          "when":    "false"
+        },
+        {
+          "command": "immosquare-vscode.copyRefWithCode",
+          "when":    "false"
+        },
+        {
+          "command": "immosquare-vscode.copyFilePath",
+          "when":    "false"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "immosquare-vscode.copyFilePath",
+          "group":   "9_immosquare@100"
+        },
+        {
+          "command": "immosquare-vscode.copyRefLlmCli",
+          "group":   "9_immosquare@101"
+        },
+        {
+          "command": "immosquare-vscode.copyRefWithCode",
+          "group":   "9_immosquare@102"
+        }
+      ]
+    },
     "keybindings":           [
       {
         "key":     "ctrl+9",
