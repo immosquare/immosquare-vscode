@@ -12,6 +12,6 @@
       "##============================================================##",
       "$0"
     ],
-    "description": "Bloc de commentaire avec séparateurs ##"
+    "description": "block comment with ## separators"
   }
 }

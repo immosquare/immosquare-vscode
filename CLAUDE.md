@@ -90,4 +90,4 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 
 - Requires `immosquare-cleaner` gem in project's Gemfile for code cleaning
 - Browser reload is macOS-only (AppleScript dependency)
-- Both commands share a single `immosquare-vscode` output channel for debugging, owned by the entry point
+- All three commands (CleanOnSave, reloadBrowserOnSave, copyReference) share a single `immosquare-vscode` output channel for debugging, owned by the entry point

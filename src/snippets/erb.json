@@ -7,7 +7,7 @@
   "er": {
     "prefix":      "er",
     "body":        "<%$0 %>",
-    "description": "print ruby tag"
+    "description": "ruby tag"
   },
   "pc": {
     "prefix":      "pc",

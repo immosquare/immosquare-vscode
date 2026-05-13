@@ -86,7 +86,7 @@ Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procf
 | Prefix        | Description       |
 | ------------- | ----------------- |
 | `ct`          | content_tag       |
-| `er`          | print ruby tag    |
+| `er`          | ruby tag          |
 | `pc`          | print comment tag |
 | `pe`          | print equal tag   |
 | `if`          | ERB if / end      |
