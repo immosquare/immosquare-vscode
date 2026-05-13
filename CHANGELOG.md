@@ -1,3 +1,14 @@
+## [0.0.21] - 2026-05-13
+
+### Added
+- Three editor-context-menu commands to copy LLM-friendly file references for Claude Code / Codex / Gemini CLI: `@path`, `@path#Lxx-Lyy`, and `@path#Lxx-Lyy` + fenced code block. Supports multi-cursor selections, snaps triple-click full-line selections back to the previous line, and stays hidden from the command palette.
+- ERB snippets: `each` (each / end block), `yield`, `t` (i18n)
+
+### Fixed
+- ERB `er` snippet body now has the missing space after `<%`
+- ERB `pc` description corrected — `<%#` is a comment, not a print
+- ERB `if` snippet body no longer wraps the block in spurious blank lines
+
 ## [0.0.20] - 2026-05-11
 - Add Ruby `bc` snippet that inserts a `##====##` block comment with the cursor focused on the comment text
 - Enable `tabCompletion=onlySnippets` and `quickSuggestions` in comments for Ruby files so `bc`+Tab inserts directly
