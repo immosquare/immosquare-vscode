@@ -83,21 +83,24 @@ The two line-range commands (`#Lxx-Lyy` and `+ code block`) handle multi-cursor 
 Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procfile.dev`, and `Procfile.local`.
 
 ## ERB Snippets
-| Prefix        | Description       |
-| ------------- | ----------------- |
-| `ct`          | content_tag       |
-| `er`          | ruby tag          |
-| `pc`          | print comment tag |
-| `pe`          | print equal tag   |
-| `if`          | ERB if / end      |
-| `else`        | ERB else tag      |
-| `elsif`       | ERB elsif tag     |
-| `end`         | ERB end tag       |
-| `lt`          | ERB link tag      |
-| `it`          | Image tag         |
-| `il`          | immosquare logger |
-| `partial`     | partial           |
-| `simple_form` | simple_form       |
+| Prefix        | Description           |
+| ------------- | --------------------- |
+| `ct`          | content_tag           |
+| `er`          | ruby tag              |
+| `pc`          | comment tag           |
+| `pe`          | print tag             |
+| `if`          | ERB if / end          |
+| `else`        | ERB else tag          |
+| `elsif`       | ERB elsif tag         |
+| `end`         | ERB end tag           |
+| `each`        | ERB each / end        |
+| `yield`       | ERB yield             |
+| `t`           | ERB i18n translation  |
+| `lt`          | ERB link tag          |
+| `it`          | Image tag             |
+| `il`          | immosquare logger     |
+| `partial`     | partial               |
+| `simple_form` | simple_form           |
 
 ## Ruby Snippets
 | Prefix      | Description                              |

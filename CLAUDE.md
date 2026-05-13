@@ -70,7 +70,7 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 
 ## Snippets Reference
 
-**ERB** (`src/snippets/erb.json`): `ct` (content_tag), `er` (ruby tag), `pc` (comment), `pe` (print equal), `if`, `else`, `elsif`, `end`, `lt` (link_tag), `it` (image_tag), `il` (immosquare logger), `partial`, `simple_form`
+**ERB** (`src/snippets/erb.json`): `ct` (content_tag), `er` (ruby tag), `pc` (comment), `pe` (print), `if`, `else`, `elsif`, `end`, `each`, `yield`, `t` (i18n), `lt` (link_tag), `it` (image_tag), `il` (immosquare logger), `partial`, `simple_form`
 
 **Ruby** (`src/snippets/ruby.json`): `il` (immosquare logger), `bc` (block comment with `##====##` separators)
 

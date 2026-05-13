@@ -6,22 +6,22 @@
   },
   "er": {
     "prefix":      "er",
-    "body":        "<%$0 %>",
+    "body":        "<% $0 %>",
     "description": "ruby tag"
   },
   "pc": {
     "prefix":      "pc",
     "body":        "<%# $0 %>",
-    "description": "print comment tag"
+    "description": "comment tag"
   },
   "pe": {
     "prefix":      "pe",
     "body":        "<%= $0 %>",
-    "description": "print equal tag"
+    "description": "print tag"
   },
   "if": {
     "prefix":      "if",
-    "body":        "\n<% if $1 %>\n\t$0\n<% end %>\n",
+    "body":        "<% if $1 %>\n\t$0\n<% end %>",
     "description": "ERB if / end"
   },
   "else": {
@@ -38,6 +38,21 @@
     "prefix":      "end",
     "body":        "<% end %>\n",
     "description": "ERB end tag"
+  },
+  "each": {
+    "prefix":      "each",
+    "body":        "<% ${1:collection}.each do |${2:item}| %>\n\t$0\n<% end %>",
+    "description": "ERB each / end"
+  },
+  "yield": {
+    "prefix":      "yield",
+    "body":        "<%= yield $0 %>",
+    "description": "ERB yield"
+  },
+  "t": {
+    "prefix":      "t",
+    "body":        "<%= t(\"$1\") %>",
+    "description": "ERB i18n translation"
   },
   "link_to": {
     "prefix":      "lt",
