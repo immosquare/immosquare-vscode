@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-VSCode extension for immosquare Rails development workflow. Provides automatic code cleaning via immosquare-cleaner gem, browser auto-reload for frontend files, ERB/Ruby snippets, Procfile syntax highlighting, and custom keybindings.
+VSCode extension for immosquare Rails development workflow. Provides automatic code cleaning via immosquare-cleaner gem, browser auto-reload for frontend files, copy-as-LLM-reference commands, ERB/Ruby snippets, Procfile syntax highlighting, and custom keybindings.
 
 ## Development Commands
 
@@ -22,12 +22,15 @@ npx vsce publish                    # publish to marketplace (requires publisher
 
 **Version bump workflow:** Update `package.json` version → Update `CHANGELOG.md` → `npx vsce package` → commit as "bump to X.X.X" → push → `npx vsce publish`
 
+### Static assets (`media/`)
+Images and other static assets referenced by `README.md` live in `media/` (VSCode convention used by all official samples). The folder is **bundled inside the `.vsix`** so the Marketplace and any local install can serve the image directly without depending on GitHub being reachable. Keep `media/` out of `.vscodeignore`.
+
 ## Architecture
 
 ### Command Module Pattern
 - Entry point: `src/immosquare-vscode.js` orchestrates command lifecycle and owns the shared output channel
 - Each command module exports `activate(context, outputChannel)` and `deactivate()` functions
-- Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`
+- Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`, `copyReference.js`
 - Activation: `onStartupFinished` event (see `package.json`)
 
 ### CleanOnSave Implementation
@@ -49,6 +52,15 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 - `reloadableExtensions`: array of extensions to watch (default: `.js`, `.js.erb`, `.html`, `.html.erb`)
 - `browsers`: array of browsers to reload (default: `["chrome"]`)
 - `urlPattern`: optional string to filter tabs by URL
+
+### Copy Reference Implementation
+- Three editor-context-menu commands to copy LLM-friendly references to the clipboard:
+  - `copyFilePath` → `@path/to/file.rb`
+  - `copyRefLlmCli` → `@path/to/file.rb#L10-L20` (Claude Code / Codex / Gemini CLI syntax)
+  - `copyRefWithCode` → reference + fenced code block with the selection
+- All three are hidden from the command palette (`when: "false"`) and only appear in `editor/context` (group `9_immosquare`)
+- Multi-cursor selections are supported on `copyRefLlmCli` (references joined by space) and `copyRefWithCode` (blocks joined by `\n\n`). `copyFilePath` ignores selections — it always outputs a single `@<path>`.
+- "Triple-click full-line" selections (cursor lands at column 0 of the next line) are snapped back to the previous line to avoid spurious `Lx-L(x+1)` references
 
 ## Snippets Reference
 

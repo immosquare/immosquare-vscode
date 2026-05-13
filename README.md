@@ -3,6 +3,7 @@
 VSCode extension to enhance your development workflow with:
 - [Code Cleaning](#code-cleaning)
 - [Browser Reloading](#browser-reloading)
+- [Copy as LLM Reference](#copy-as-llm-reference)
 - [Procfile Language Support](#procfile-language-support)
 - [ERB snippets](#erb-snippets)
 - [Ruby snippets](#ruby-snippets)
@@ -33,6 +34,49 @@ The extension automatically reloads browsers when you save specific files.
 - `reloadableExtensions`: File extensions to watch (default: [".js", ".js.erb", ".html", ".html.erb"]). Set to `false` to disable.
 - `browsers`: Browsers to reload (allowed: `chrome`, `firefox`, `safari` — default: ["chrome"])
 - `urlPattern` (optional): Pattern to filter URLs to reload, only reloads tabs containing this pattern
+
+## Copy as LLM Reference
+
+Three right-click commands to copy file references in a format understood by Claude Code, Codex, Gemini CLI, and other LLM-based assistants.
+
+![Editor context menu showing the three copy commands](media/menu-copy-immosquare.png)
+
+Given the following selection in `app/controllers/errors_controller.rb` (lines 4 to 7):
+
+```ruby
+def not_found
+  @bad_path = request.original_fullpath
+  render(:status => 404, :formats => [:html])
+end
+```
+
+Each command produces:
+
+**`immosquare: copy as @path`**
+
+```
+@app/controllers/errors_controller.rb
+```
+
+**`immosquare: copy as @path#Lxx-Lyy`**
+
+```
+@app/controllers/errors_controller.rb#L4-L7
+```
+
+**`immosquare: copy as @path#Lxx-Lyy + code block`**
+
+````
+@app/controllers/errors_controller.rb#L4-L7
+```ruby
+def not_found
+  @bad_path = request.original_fullpath
+  render(:status => 404, :formats => [:html])
+end
+```
+````
+
+The two line-range commands (`#Lxx-Lyy` and `+ code block`) handle multi-cursor selections, producing one reference per cursor. All three commands are hidden from the command palette — they are intentionally context-menu-only to keep it uncluttered.
 
 ## Procfile Language Support
 
