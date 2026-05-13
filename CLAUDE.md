@@ -33,6 +33,12 @@ Images and other static assets referenced by `README.md` live in `media/` (VSCod
 - Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`, `copyReference.js`
 - Activation: `onStartupFinished` event (see `package.json`)
 
+### Module system: CommonJS only (do NOT migrate to ESM)
+- All source files use `require`/`module.exports`. This is **intentional and aligned with Microsoft's official guidance**.
+- VSCode 1.94+ migrated its core to ESM but kept extensions on CommonJS — see [microsoft/vscode#130367](https://github.com/microsoft/vscode/issues/130367) and [#135450](https://github.com/microsoft/vscode/issues/135450). No ESM-for-extensions API is stable as of 2026-05.
+- The global rule `~/.claude/rules/javascript.md` ("`import` only, never `require`") targets browser-bound code bundled via esbuild. It does **not** apply to this VSCode extension running in the Node host.
+- When/if Microsoft officially ships ESM extension support, migration is trivial (add `"type": "module"`, convert 4 files). Until then, stay CommonJS.
+
 ### CleanOnSave Implementation
 - Listens to `onDidSaveTextDocument`, but only for `file://` scheme documents inside a workspace
 - Checks gem availability on activation via `bundle info immosquare-cleaner`
