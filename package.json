@@ -120,7 +120,7 @@
       }
     ],
     "menus": {
-      "commandPalette": [
+      "commandPalette":   [
         {
           "command": "immosquare-vscode.copyRefLlmCli",
           "when":    "false"
@@ -134,7 +134,7 @@
           "when":    "false"
         }
       ],
-      "editor/context": [
+      "editor/context":   [
         {
           "command": "immosquare-vscode.copyFilePath",
           "group":   "9_immosquare@100"
@@ -146,6 +146,12 @@
         {
           "command": "immosquare-vscode.copyRefWithCode",
           "group":   "9_immosquare@102"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "immosquare-vscode.copyFilePath",
+          "group":   "9_immosquare@100"
         }
       ]
     },

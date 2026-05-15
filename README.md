@@ -37,7 +37,7 @@ The extension automatically reloads browsers when you save specific files.
 
 ## Copy as LLM Reference
 
-Three right-click commands to copy file references in a format understood by Claude Code, Codex, Gemini CLI, and other LLM-based assistants.
+Three right-click commands to copy file references in a format understood by Claude Code, Codex, Gemini CLI, and other LLM-based assistants. All three are available from the editor context menu; `copy as @path` is also available from the Explorer (file tree) context menu, where it supports multi-selection.
 
 ![Editor context menu showing the three copy commands](media/menu-copy-immosquare.png)
 

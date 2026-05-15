@@ -2,6 +2,7 @@
 
 ### Added
 - Three editor-context-menu commands to copy LLM-friendly file references for Claude Code / Codex / Gemini CLI: `@path`, `@path#Lxx-Lyy`, and `@path#Lxx-Lyy` + fenced code block. Supports multi-cursor selections, snaps triple-click full-line selections back to the previous line, and stays hidden from the command palette.
+- Explorer (file tree) context menu: `copy as @path` is also exposed on files and folders, with support for multi-selection (paths joined by space).
 - ERB snippets: `each` (each / end block), `yield`, `t` (i18n)
 
 ### Fixed

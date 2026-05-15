@@ -95,6 +95,21 @@ const withEditor = (handler) => async () => {
   await handler(editor)
 }
 
+//============================================================//
+// Resolve the URIs targeted by copyFilePath.
+// - From explorer/context: VSCode passes (clickedUri, selectedUris[])
+// — return the multi-selection when present, otherwise the click.
+// - From editor/context or command palette: fall back to the
+// active text editor's document URI.
+//============================================================//
+const resolveFilePathUris = (uri, uris) => {
+  if (Array.isArray(uris) && uris.length > 0) return uris
+  if (uri && uri.fsPath) return [uri]
+  const editor = vscode.window.activeTextEditor
+  if (editor) return [editor.document.uri]
+  return []
+}
+
 const activate = (context, sharedOutputChannel) => {
   outputChannel = sharedOutputChannel
 
@@ -105,9 +120,15 @@ const activate = (context, sharedOutputChannel) => {
     vscode.commands.registerCommand("immosquare-vscode.copyRefWithCode", withEditor(async (editor) => {
       await copy(buildReferenceWithCode(editor), "Reference + code")
     })),
-    vscode.commands.registerCommand("immosquare-vscode.copyFilePath", withEditor(async (editor) => {
-      await copy(`@${buildPath(editor.document.uri)}`, "File path")
-    }))
+    vscode.commands.registerCommand("immosquare-vscode.copyFilePath", async (uri, uris) => {
+      const targets = resolveFilePathUris(uri, uris)
+      if (targets.length === 0) {
+        vscode.window.showWarningMessage("No file selected")
+        return
+      }
+      const text = targets.map((u) => `@${buildPath(u)}`).join(" ")
+      await copy(text, targets.length > 1 ? `File paths (${targets.length})` : "File path")
+    })
   )
 }
 
