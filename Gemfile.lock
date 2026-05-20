@@ -46,7 +46,7 @@ GEM
     htmlbeautifier (1.4.3)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    immosquare-cleaner (0.1.109)
+    immosquare-cleaner (0.1.110)
       erb_lint (>= 0.7, <= 1000.0)
       htmlbeautifier (>= 1.4, <= 1000.0)
       immosquare-extensions (>= 0.1, <= 1000.0)
@@ -136,4 +136,4 @@ DEPENDENCIES
   immosquare-cleaner
 
 BUNDLED WITH
-  4.0.11
+  4.0.12
