@@ -60,12 +60,12 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 - `urlPattern`: optional string to filter tabs by URL
 
 ### Copy Reference Implementation
-- Three editor-context-menu commands to copy LLM-friendly references to the clipboard:
+- Three context-menu commands to copy LLM-friendly references to the clipboard:
   - `copyFilePath` → `@path/to/file.rb`
   - `copyRefLlmCli` → `@path/to/file.rb#L10-L20` (Claude Code / Codex / Gemini CLI syntax)
   - `copyRefWithCode` → reference + fenced code block with the selection
-- All three are hidden from the command palette (`when: "false"`) and only appear in `editor/context` (group `9_immosquare`)
-- Multi-cursor selections are supported on `copyRefLlmCli` (references joined by space) and `copyRefWithCode` (blocks joined by `\n\n`). `copyFilePath` ignores selections — it always outputs a single `@<path>`.
+- All three are hidden from the command palette (`when: "false"`). `copyRefLlmCli` and `copyRefWithCode` appear only in `editor/context` (group `9_immosquare`); `copyFilePath` appears in both `editor/context` and `explorer/context` (file tree), all under group `9_immosquare`
+- Multi-cursor selections are supported on `copyRefLlmCli` (references joined by space) and `copyRefWithCode` (blocks joined by `\n\n`). `copyFilePath` ignores text selection; when invoked from the explorer with multiple files/folders selected, it outputs one `@<path>` per item joined by space (uses `vscode.commands.registerCommand`'s `(uri, uris)` signature)
 - "Triple-click full-line" selections (cursor lands at column 0 of the next line) are snapped back to the previous line to avoid spurious `Lx-L(x+1)` references
 
 ## Snippets Reference
@@ -73,6 +73,9 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 **ERB** (`src/snippets/erb.json`): `ct` (content_tag), `er` (ruby tag), `pc` (comment), `pe` (print), `if`, `else`, `elsif`, `end`, `each`, `yield`, `t` (i18n), `lt` (link_tag), `it` (image_tag), `il` (immosquare logger), `partial`, `simple_form`
 
 **Ruby** (`src/snippets/ruby.json`): `il` (immosquare logger), `bc` (block comment with `##====##` separators)
+
+### `configurationDefaults` for Ruby
+`package.json` declares `[ruby]` defaults (`editor.tabCompletion: "onlySnippets"`, `editor.quickSuggestions.comments: "on"`). These let `bc` + Tab expand inside Ruby comment lines (where IntelliSense is normally muted). Don't remove without revisiting that UX.
 
 ## Keybindings
 
