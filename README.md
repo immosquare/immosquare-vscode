@@ -1,3 +1,10 @@
+---
+locale: en
+tags:
+  - app:immosquare-vscode
+  - audience:technique
+---
+
 # immosquare-vscode
 
 VSCode extension to enhance your development workflow with:
