@@ -7,28 +7,28 @@ tags:
 
 # immosquare-vscode
 
-VSCode extension to enhance your development workflow with:
-- [Code Cleaning](#code-cleaning)
-- [Browser Reloading](#browser-reloading)
-- [Copy as LLM Reference](#copy-as-llm-reference)
-- [Procfile Language Support](#procfile-language-support)
-- [ERB snippets](#erb-snippets)
-- [Ruby snippets](#ruby-snippets)
-- [Custom keyboard shortcuts](#keyboard-shortcuts)
+immosquare-vscode is a VSCode extension that enhances your development workflow: it cleans code on save, reloads browsers on save, copies file references for LLM assistants, ships ERB and Ruby snippets, adds Procfile syntax highlighting, and binds a set of custom keyboard shortcuts. Code cleaning requires the `immosquare-cleaner` gem in your project, and browser reloading is macOS only.
 
-## Code Cleaning
+- [Code cleaning on save with immosquare-cleaner](#code-cleaning-on-save-with-immosquare-cleaner)
+- [Browser reloading on save (macOS only)](#browser-reloading-on-save-macos-only)
+- [Copy as LLM reference commands for Claude Code, Codex and Gemini CLI](#copy-as-llm-reference-commands-for-claude-code-codex-and-gemini-cli)
+- [ERB and Ruby snippets, and Procfile syntax highlighting](#erb-and-ruby-snippets-and-procfile-syntax-highlighting)
+- [Keyboard shortcuts added by immosquare-vscode](#keyboard-shortcuts-added-by-immosquare-vscode)
+- [Testing the extension locally](#testing-the-extension-locally)
+
+## Code cleaning on save with immosquare-cleaner
 
 The extension automatically runs the [immosquare-cleaner](https://github.com/immosquare/immosquare-cleaner) gem on saved files to clean your code (Rubocop, Eslint, Prettier, etc.).
 
 **Requirement**: The `immosquare-cleaner` gem must be installed in your project.
 
-## Browser Reloading
+## Browser reloading on save (macOS only)
 
 The extension automatically reloads browsers when you save specific files.
 
 > **macOS only.** Browser reload uses AppleScript via `osascript`; it is silently skipped on Linux/Windows.
 
-### Configuration
+Three settings drive which files trigger a reload, which browsers are reloaded, and which tabs are concerned:
 
 ```json
 {
@@ -42,7 +42,7 @@ The extension automatically reloads browsers when you save specific files.
 - `browsers`: Browsers to reload (allowed: `chrome`, `firefox`, `safari` — default: ["chrome"])
 - `urlPattern` (optional): Pattern to filter URLs to reload, only reloads tabs containing this pattern
 
-## Copy as LLM Reference
+## Copy as LLM reference commands for Claude Code, Codex and Gemini CLI
 
 Three right-click commands to copy file references in a format understood by Claude Code, Codex, Gemini CLI, and other LLM-based assistants. All three are available from the editor context menu; `copy as @path` is also available from the Explorer (file tree) context menu, where it supports multi-selection.
 
@@ -85,11 +85,12 @@ end
 
 The two line-range commands (`#Lxx-Lyy` and `+ code block`) handle multi-cursor selections, producing one reference per cursor. All three commands are hidden from the command palette — they are intentionally context-menu-only to keep it uncluttered.
 
-## Procfile Language Support
+## ERB and Ruby snippets, and Procfile syntax highlighting
 
-Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procfile.dev`, and `Procfile.local`.
+The extension provides syntax highlighting and `#` line-comment support for `Procfile`, `Procfile.dev`, and `Procfile.local`, plus two sets of snippet prefixes.
 
-## ERB Snippets
+The ERB snippets expand to these tags and helpers:
+
 | Prefix        | Description           |
 | ------------- | --------------------- |
 | `ct`          | content_tag           |
@@ -109,13 +110,16 @@ Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procf
 | `partial`     | partial               |
 | `simple_form` | simple_form           |
 
-## Ruby Snippets
+The Ruby snippets cover logging and block comments:
+
 | Prefix      | Description                              |
 | ----------- | ---------------------------------------- |
 | `il`        | immosquare logger                        |
 | `bc`        | block comment with `##====##` separators |
 
-## Keyboard Shortcuts
+## Keyboard shortcuts added by immosquare-vscode
+
+The extension binds these keys, in their linux and mac variants:
 
 | Keybinding (linux/mac)         | Command                                  | When                                  |
 | ------------------------------ | ---------------------------------------- | ------------------------------------- |
@@ -128,6 +132,6 @@ Provides syntax highlighting and `#` line-comment support for `Procfile`, `Procf
 | `shift+ctrl+r` / `shift+cmd+r` | editor.action.smartSelect.shrink         | editorTextFocus                       |
 | `ctrl+3` / `cmd+3`             | editor.action.insertSnippet              | editorHasSelection                    |
 
+## Testing the extension locally
 
-## Testing
-- To test the extension, tap fn+f5 to open a new window with the extension loaded.
+To test the extension, tap fn+f5 to open a new window with the extension loaded.
