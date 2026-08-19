@@ -132,6 +132,8 @@ The extension binds these keys, in their linux and mac variants:
 | `shift+ctrl+r` / `shift+cmd+r` | editor.action.smartSelect.shrink         | editorTextFocus                       |
 | `ctrl+3` / `cmd+3`             | editor.action.insertSnippet              | editorHasSelection                    |
 
+The `ctrl+3` / `cmd+3` binding is the only one that carries an argument: it passes the snippet `"#{$TM_SELECTED_TEXT}"` to `editor.action.insertSnippet`, which wraps the current selection in a Ruby string interpolation — `name` becomes `"#{name}"`. That is why it is bound to `editorHasSelection`: with no selection it would only insert an empty `"#{}"`.
+
 ## Testing the extension locally
 
 To test the extension, tap fn+f5 to open a new window with the extension loaded.
