@@ -20,10 +20,12 @@ npx vsce package                    # creates .vsix file
 npx vsce publish                    # publish to marketplace (requires publisher access)
 ```
 
-**Version bump workflow:** Update `package.json` version → Update `CHANGELOG.md` → `npx vsce package` → commit as "bump to X.X.X" → push → `npx vsce publish`
+**Version bump workflow:** see "Publishing a new release of immosquare-vscode to the VS Code Marketplace" in `README.md`. The commit of `package.json` and `CHANGELOG.md` has to land *before* packaging, or the archive carries the previous version.
 
-### Static assets (`media/`)
-Images and other static assets referenced by `README.md` live in `media/` (VSCode convention used by all official samples). The folder is **bundled inside the `.vsix`** so the Marketplace and any local install can serve the image directly without depending on GitHub being reachable. Keep `media/` out of `.vscodeignore`.
+### No screenshots in `README.md`
+The README carries no image. A screenshot of a context menu goes stale the moment a command is added, renamed or removed, and nothing signals it — the one that shipped until 0.0.23 still showed three commands after a fourth existed. Menus are described in prose (which menu, which entries, what a multi-selection does) and choices between similar commands are drawn as a mermaid block, which is text: diffable, reviewable, and never out of date without the diff showing it.
+
+If an image ever becomes unavoidable, `media/` is the VSCode convention and must stay out of `.vscodeignore` so the Marketplace serves it without depending on GitHub.
 
 ## Architecture
 

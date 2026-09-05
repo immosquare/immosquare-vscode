@@ -1,3 +1,11 @@
+## [0.0.24] - 2026-09-04
+
+### Fixed
+- 0.0.23 was rejected by the Marketplace validator after upload: the `README.md` procedure for regenerating the icon contained an image tag pointing at `icon.svg`, and the validator reads image references inside fenced code blocks as real ones while refusing SVG. The procedure now concatenates the SVG into the page instead of pointing at it, and the README carries no image tag at all.
+
+### Removed
+- `media/menu-copy-immosquare.png`, a screenshot of the context menu when it still had three commands. It was 53 KB of the package, no longer referenced, and wrong. Menus are described in prose, and the choice between the four copy commands is drawn as a mermaid decision tree — text, so it cannot drift without the diff showing it.
+
 ## [0.0.23] - 2026-09-04
 
 ### Added

@@ -44,7 +44,22 @@ Three settings drive which files trigger a reload, which browsers are reloaded, 
 
 ## Copy as LLM reference commands for Claude Code, Codex and Gemini CLI
 
-Four right-click commands copy a file reference in a format understood by Claude Code, Codex, Gemini CLI and other LLM-based assistants. All four sit on the editor context menu; the two plain-path ones are also on the Explorer (file tree) context menu, where they support multi-selection.
+Four right-click commands copy a file reference in a format understood by Claude Code, Codex, Gemini CLI and other LLM-based assistants.
+
+Right-click inside the editor to get all four, grouped together at the bottom of the menu. Right-click a file or a folder in the Explorer (file tree) to get the two plain-path ones, which there accept a multi-selection and emit one reference per item, joined by a space. None of the four appears in the command palette, on purpose — they stay context-menu-only so the palette is not cluttered by commands that need a file under the cursor.
+
+Two questions decide which of the four to reach for: whether the reference has to survive being pasted somewhere else, and whether it has to carry line numbers.
+
+```mermaid
+flowchart TD
+    A["Right-click on the file"] --> B{"Pasted in a session opened<br>on this same project?"}
+    B -- yes --> C{"Line numbers needed?"}
+    B -- "no, another project" --> D{"Line numbers needed?"}
+    C -- no --> E["copy as @path"]
+    C -- yes --> F["copy as @path#Lxx-Lyy"]
+    D -- no --> G["copy as @/absolute/path"]
+    D -- yes --> H["copy as @/absolute/path#Lxx-Lyy"]
+```
 
 Given this selection in `app/controllers/errors_controller.rb`, lines 4 to 7:
 
@@ -66,7 +81,7 @@ Each command produces:
 
 The workspace-relative form is the short one, and it is the right one inside a session opened on that project. The absolute form is the one that survives a move: pasted into a session opened on another project, a relative path resolves to nothing — or, worse, to a different file that happens to sit at the same place in the tree.
 
-The two `#Lxx-Lyy` commands handle multi-cursor selections and produce one reference per cursor, joined by a space. A triple-click full-line selection ends at column 0 of the following line; the range snaps back so the reference names the line actually selected. All four commands are hidden from the command palette, on purpose — they are context-menu-only so the palette stays uncluttered.
+The two `#Lxx-Lyy` commands handle multi-cursor selections and produce one reference per cursor, joined by a space. A triple-click full-line selection ends at column 0 of the following line; the range snaps back so the reference names the line actually selected.
 
 ## Opening a file in the default browser
 
@@ -138,19 +153,17 @@ The rendering flattens the wordmark onto an opaque white square, and that opacit
 Replace `icon.svg` with the current wordmark, then run this from the repository root:
 
 ```bash
-cat > icon.html <<'HTML'
-<style>
-  html,body{margin:0;padding:0}
-  body{width:256px;height:256px;background:#fff;display:flex;align-items:center;justify-content:center}
-  img{width:224px;height:auto}
-</style>
-<img src="icon.svg">
-HTML
+{
+  echo '<style>html,body{margin:0;padding:0}body{width:256px;height:256px;background:#fff;display:flex;align-items:center;justify-content:center}svg{width:224px;height:auto}</style>'
+  cat icon.svg
+} > icon.html
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
   --window-size=256,256 --virtual-time-budget=4000 \
   --screenshot=icon.png "file://$PWD/icon.html"
 rm icon.html
 ```
+
+The SVG is concatenated into the page rather than pointed at with an image tag, and that detail is load-bearing. The Marketplace validator scans this README for image references **without skipping fenced code blocks**, and it refuses references to SVG files. An image tag whose source ends in `.svg` — written anywhere in this file, example or not, code block or not — is read as a real reference and gets the upload rejected with `Error processing SVG reference in file '/extension/README.md'`. Keep every mention of the source file in prose or inline code, never inside a tag.
 
 Check the output before committing it:
 
