@@ -44,11 +44,9 @@ Three settings drive which files trigger a reload, which browsers are reloaded, 
 
 ## Copy as LLM reference commands for Claude Code, Codex and Gemini CLI
 
-Three right-click commands to copy file references in a format understood by Claude Code, Codex, Gemini CLI, and other LLM-based assistants. All three are available from the editor context menu; `copy as @path` is also available from the Explorer (file tree) context menu, where it supports multi-selection.
+Four right-click commands copy a file reference in a format understood by Claude Code, Codex, Gemini CLI and other LLM-based assistants. All four sit on the editor context menu; the two plain-path ones are also on the Explorer (file tree) context menu, where they support multi-selection.
 
-![Editor context menu showing the three copy commands](media/menu-copy-immosquare.png)
-
-Given the following selection in `app/controllers/errors_controller.rb` (lines 4 to 7):
+Given this selection in `app/controllers/errors_controller.rb`, lines 4 to 7:
 
 ```ruby
 def not_found
@@ -59,31 +57,24 @@ end
 
 Each command produces:
 
-**`immosquare: copy as @path`**
+| Command                                       | Clipboard                                                       |
+| --------------------------------------------- | --------------------------------------------------------------- |
+| `immosquare: copy as @path`                   | `@app/controllers/errors_controller.rb`                         |
+| `immosquare: copy as @path#Lxx-Lyy`           | `@app/controllers/errors_controller.rb#L4-L7`                   |
+| `immosquare: copy as @/absolute/path`         | `@/Users/you/Sites/myapp/app/controllers/errors_controller.rb`   |
+| `immosquare: copy as @/absolute/path#Lxx-Lyy` | `@/Users/you/Sites/myapp/app/controllers/errors_controller.rb#L4-L7` |
 
-```
-@app/controllers/errors_controller.rb
-```
+The workspace-relative form is the short one, and it is the right one inside a session opened on that project. The absolute form is the one that survives a move: pasted into a session opened on another project, a relative path resolves to nothing — or, worse, to a different file that happens to sit at the same place in the tree.
 
-**`immosquare: copy as @path#Lxx-Lyy`**
+The two `#Lxx-Lyy` commands handle multi-cursor selections and produce one reference per cursor, joined by a space. A triple-click full-line selection ends at column 0 of the following line; the range snaps back so the reference names the line actually selected. All four commands are hidden from the command palette, on purpose — they are context-menu-only so the palette stays uncluttered.
 
-```
-@app/controllers/errors_controller.rb#L4-L7
-```
+## Opening a file in the default browser
 
-**`immosquare: copy as @path#Lxx-Lyy + code block`**
+`immosquare: open in browser` hands the selected files to the operating system, which opens each one with the application registered for its type — Chrome for `.html` on a standard setup. The command sits on both the editor and the Explorer context menus, and the Explorer one accepts a multi-selection, so a batch of generated mockups opens in a single gesture.
 
-````
-@app/controllers/errors_controller.rb#L4-L7
-```ruby
-def not_found
-  @bad_path = request.original_fullpath
-  render(:status => 404, :formats => [:html])
-end
-```
-````
+It exists to remove the Reveal in Finder detour: an `.html` mockup written under `tmp/` otherwise has to travel through Finder before it reaches a browser.
 
-The two line-range commands (`#Lxx-Lyy` and `+ code block`) handle multi-cursor selections, producing one reference per cursor. All three commands are hidden from the command palette — they are intentionally context-menu-only to keep it uncluttered.
+Asking the operating system rather than naming a browser is what keeps the command correct the day the default browser changes. The flip side is that it follows the *file type* association and not the "default browser" setting: on a machine where `.html` is mapped to an editor, the file reopens in that editor. Outside macOS the command falls back to `vscode.env.openExternal`, which defers to the same mechanism.
 
 ## ERB and Ruby snippets, and Procfile syntax highlighting
 

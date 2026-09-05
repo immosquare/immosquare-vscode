@@ -30,7 +30,8 @@ Images and other static assets referenced by `README.md` live in `media/` (VSCod
 ### Command Module Pattern
 - Entry point: `src/immosquare-vscode.js` orchestrates command lifecycle and owns the shared output channel
 - Each command module exports `activate(context, outputChannel)` and `deactivate()` functions
-- Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`, `copyReference.js`
+- Commands: `CleanOnSave.js`, `reloadBrowserOnSave.js`, `copyReference.js`, `openInBrowser.js`
+- Shared helpers live in `src/lib/` — `targetUris.js` resolves the URIs a context-menu command targets, and is used by every command exposed on both the editor and the explorer menus
 - Activation: `onStartupFinished` event (see `package.json`)
 
 ### Module system: CommonJS only (do NOT migrate to ESM)
@@ -60,13 +61,19 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 - `urlPattern`: optional string to filter tabs by URL
 
 ### Copy Reference Implementation
-- Three context-menu commands to copy LLM-friendly references to the clipboard:
-  - `copyFilePath` → `@path/to/file.rb`
-  - `copyRefLlmCli` → `@path/to/file.rb#L10-L20` (Claude Code / Codex / Gemini CLI syntax)
-  - `copyRefWithCode` → reference + fenced code block with the selection
-- All three are hidden from the command palette (`when: "false"`). `copyRefLlmCli` and `copyRefWithCode` appear only in `editor/context` (group `9_immosquare`); `copyFilePath` appears in both `editor/context` and `explorer/context` (file tree), all under group `9_immosquare`
-- Multi-cursor selections are supported on `copyRefLlmCli` (references joined by space) and `copyRefWithCode` (blocks joined by `\n\n`). `copyFilePath` ignores text selection; when invoked from the explorer with multiple files/folders selected, it outputs one `@<path>` per item joined by space (uses `vscode.commands.registerCommand`'s `(uri, uris)` signature)
+- Four context-menu commands copy LLM-friendly references to the clipboard, in two families that differ only by how the URI is turned into a string:
+  - `copyFilePath` → `@path/to/file.rb` and `copyRefLlmCli` → `@path/to/file.rb#L10-L20`, both workspace-relative
+  - `copyFilePathAbsolute` → `@/Users/you/Sites/app/path/to/file.rb` and `copyRefLlmCliAbsolute` → the same with `#L10-L20`, both from the filesystem root
+- The absolute pair exists because a workspace-relative reference resolves to nothing — or to a different file — once pasted into a session opened on another project
+- All four are hidden from the command palette (`when: "false"`). All four appear in `editor/context`; the two plain-path ones also appear in `explorer/context` (file tree), all under group `9_immosquare`
+- Multi-cursor selections are supported on the two `#Lxx-Lyy` commands, which produce one reference per cursor joined by a space. The plain-path commands ignore text selection; invoked from the explorer with several files or folders selected, they output one `@<path>` per item joined by a space (via `vscode.commands.registerCommand`'s `(uri, uris)` signature)
 - "Triple-click full-line" selections (cursor lands at column 0 of the next line) are snapped back to the previous line to avoid spurious `Lx-L(x+1)` references
+
+### Open In Browser Implementation
+- `openInBrowser` hands each target URI to the OS, which opens it with the application registered for that file type — Chrome for `.html` on a standard setup
+- macOS goes through `open <path>`; every other platform falls back to `vscode.env.openExternal`
+- It resolves its targets with the same `src/lib/targetUris.js` helper as the copy commands, so the editor and explorer entry points cannot drift apart, and the explorer one accepts a multi-selection
+- Naming no browser is deliberate: the command follows the OS association, so it keeps working when the default browser changes. The trade-off is that a file type mapped to an editor reopens there
 
 ## Snippets Reference
 
@@ -93,4 +100,4 @@ Access via `vscode.workspace.getConfiguration("immosquare-vscode")`:
 
 - Requires `immosquare-cleaner` gem in project's Gemfile for code cleaning
 - Browser reload is macOS-only (AppleScript dependency)
-- All three commands (CleanOnSave, reloadBrowserOnSave, copyReference) share a single `immosquare-vscode` output channel for debugging, owned by the entry point
+- All four command modules (CleanOnSave, reloadBrowserOnSave, copyReference, openInBrowser) share a single `immosquare-vscode` output channel for debugging, owned by the entry point
