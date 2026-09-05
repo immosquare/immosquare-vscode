@@ -137,3 +137,51 @@ The `ctrl+3` / `cmd+3` binding is the only one that carries an argument: it pass
 ## Testing the extension locally
 
 To test the extension, tap fn+f5 to open a new window with the extension loaded.
+
+## Regenerating the extension icon from the immosquare wordmark
+
+`icon.png` is never edited by hand. It is rendered from `icon.svg`, the immosquare wordmark, so a brand change is replayed with one command instead of a round trip through a design tool.
+
+The rendering flattens the wordmark onto an opaque white square, and that opacity is the point. The wordmark is red and dark grey on a transparent background: on the dark background the Marketplace and the VS Code extensions panel use for most users, everything but the red `immo` disappears. An opaque background makes the icon read identically in both themes.
+
+Replace `icon.svg` with the current wordmark, then run this from the repository root:
+
+```bash
+cat > icon.html <<'HTML'
+<style>
+  html,body{margin:0;padding:0}
+  body{width:256px;height:256px;background:#fff;display:flex;align-items:center;justify-content:center}
+  img{width:224px;height:auto}
+</style>
+<img src="icon.svg">
+HTML
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+  --window-size=256,256 --virtual-time-budget=4000 \
+  --screenshot=icon.png "file://$PWD/icon.html"
+rm icon.html
+```
+
+Check the output before committing it:
+
+```bash
+sips -g pixelWidth -g pixelHeight -g hasAlpha icon.png
+```
+
+It must report 256 × 256 and `hasAlpha: no`. The Marketplace requires at least 128 × 128; 256 keeps the icon crisp on hidpi displays. `icon.svg` is listed in `.vscodeignore`, so only the rendered PNG ships in the package.
+
+## Publishing a new release of immosquare-vscode to the VS Code Marketplace
+
+The Marketplace refreshes the icon, the README and the changelog only when a new version is published. Editing any of them in the repository changes nothing for users until this procedure runs.
+
+1. Bump `version` in `package.json`
+2. Add the matching entry at the top of `CHANGELOG.md`
+3. Commit `package.json` and `CHANGELOG.md`
+4. Publish:
+
+   ```bash
+   vsce publish
+   ```
+
+   `vsce` packages and uploads in one step. To inspect the package first without publishing, run `vsce package`, which writes `immosquare-vscode-<version>.vsix` in the repository root. Those files are covered by `*.vsix` in `.gitignore` and can be deleted at any time.
+
+5. Check the published listing at [marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=immosquare.immosquare-vscode)
