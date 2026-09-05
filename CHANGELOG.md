@@ -1,3 +1,15 @@
+## [0.0.23] - 2026-09-04
+
+### Added
+- `immosquare: open in browser`, on the editor and explorer context menus, opens the selected files with the application the OS registers for their type — Chrome for `.html` on a standard setup. Supports multi-selection, and removes the Reveal in Finder detour for the `.html` mockups that pile up under `tmp/`.
+- Two absolute-path variants of the copy commands: `copy as @/absolute/path` and `copy as @/absolute/path#Lxx-Lyy`. A workspace-relative reference resolves to nothing — or to a different file — once pasted into a session opened on another project; the absolute form survives the move.
+
+### Changed
+- Extension icon updated to the current immosquare wordmark, rendered at 256 × 256 on an opaque white background so it reads the same in light and dark themes.
+
+### Removed
+- `copy as @path#Lxx-Lyy + code block` and its `immosquare-vscode.copyRefWithCode` command. Any keybinding pointing at that command id stops working.
+
 ## [0.0.22] - 2026-05-15
 
 ### Added
