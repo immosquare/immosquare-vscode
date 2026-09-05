@@ -111,26 +111,34 @@
         "title":   "immosquare: copy as @path#Lxx-Lyy"
       },
       {
-        "command": "immosquare-vscode.copyRefWithCode",
-        "title":   "immosquare: copy as @path#Lxx-Lyy + code block"
-      },
-      {
         "command": "immosquare-vscode.copyFilePath",
         "title":   "immosquare: copy as @path"
+      },
+      {
+        "command": "immosquare-vscode.copyFilePathAbsolute",
+        "title":   "immosquare: copy as @/absolute/path"
+      },
+      {
+        "command": "immosquare-vscode.copyRefLlmCliAbsolute",
+        "title":   "immosquare: copy as @/absolute/path#Lxx-Lyy"
       }
     ],
     "menus": {
       "commandPalette":   [
         {
+          "command": "immosquare-vscode.copyFilePath",
+          "when":    "false"
+        },
+        {
           "command": "immosquare-vscode.copyRefLlmCli",
           "when":    "false"
         },
         {
-          "command": "immosquare-vscode.copyRefWithCode",
+          "command": "immosquare-vscode.copyFilePathAbsolute",
           "when":    "false"
         },
         {
-          "command": "immosquare-vscode.copyFilePath",
+          "command": "immosquare-vscode.copyRefLlmCliAbsolute",
           "when":    "false"
         }
       ],
@@ -144,14 +152,22 @@
           "group":   "9_immosquare@101"
         },
         {
-          "command": "immosquare-vscode.copyRefWithCode",
+          "command": "immosquare-vscode.copyFilePathAbsolute",
           "group":   "9_immosquare@102"
+        },
+        {
+          "command": "immosquare-vscode.copyRefLlmCliAbsolute",
+          "group":   "9_immosquare@103"
         }
       ],
       "explorer/context": [
         {
           "command": "immosquare-vscode.copyFilePath",
           "group":   "9_immosquare@100"
+        },
+        {
+          "command": "immosquare-vscode.copyFilePathAbsolute",
+          "group":   "9_immosquare@101"
         }
       ]
     },

@@ -1,14 +1,24 @@
-const vscode = require("vscode")
+const vscode              = require("vscode")
+const {resolveTargetUris} = require("../lib/targetUris")
 
 let outputChannel
 
 //============================================================//
-// Build the workspace-relative path, fallback to absolute
+// Workspace-relative path, fallback to absolute when the file
+// lives outside any open folder.
 //============================================================//
 const buildPath = (uri) => {
   const relative = vscode.workspace.asRelativePath(uri, false)
   return relative || uri.fsPath
 }
+
+//============================================================//
+// Full path from the filesystem root. This is what makes a
+// reference paste-able into a session opened on another
+// project, where a workspace-relative path resolves to a file
+// that does not exist there — or worse, to a different one.
+//============================================================//
+const buildAbsolutePath = (uri) => uri.fsPath
 
 //============================================================//
 // Convert a vscode.Selection into [startLine, endLine] (1-based)
@@ -25,10 +35,10 @@ const selectionLines = (selection) => {
 //============================================================//
 // llm-cli style: @path#L10-L20 (Claude Code, Codex, Gemini CLI…)
 //============================================================//
-const formatLlmCli = (relPath, selection) => {
+const formatLlmCli = (path, selection) => {
   const [start, end] = selectionLines(selection)
-  if (start === end) return `@${relPath}#L${start}`
-  return `@${relPath}#L${start}-L${end}`
+  if (start === end) return `@${path}#L${start}`
+  return `@${path}#L${start}-L${end}`
 }
 
 //============================================================//
@@ -36,42 +46,9 @@ const formatLlmCli = (relPath, selection) => {
 // VSCode always exposes at least one selection (the cursor),
 // so editor.selections is never empty.
 //============================================================//
-const buildReference = (editor, formatter) => {
-  const relPath = buildPath(editor.document.uri)
-  return editor.selections.map((sel) => formatter(relPath, sel)).join(" ")
-}
-
-//============================================================//
-// Map VSCode languageId to Markdown fence language hint.
-// Returns "" when no sensible Markdown lang exists.
-//============================================================//
-const MARKDOWN_LANG_BY_ID = {
-  javascriptreact: "jsx",
-  typescriptreact: "tsx",
-  shellscript:     "bash",
-  jsonc:           "json",
-  plaintext:       ""
-}
-
-const markdownLang = (languageId) => {
-  if (!languageId) return ""
-  if (languageId in MARKDOWN_LANG_BY_ID) return MARKDOWN_LANG_BY_ID[languageId]
-  return languageId
-}
-
-//============================================================//
-// Build "@path#L10-L20\n```lang\n<code>\n```"
-//============================================================//
-const buildReferenceWithCode = (editor) => {
-  const relPath = buildPath(editor.document.uri)
-  const lang    = markdownLang(editor.document.languageId)
-  const blocks  = editor.selections.map((sel) => {
-    const reference = formatLlmCli(relPath, sel)
-    const code      = sel.isEmpty ? "" : editor.document.getText(sel).replace(/\n+$/, "")
-    if (!code) return reference
-    return `${reference}\n\`\`\`${lang}\n${code}\n\`\`\``
-  })
-  return blocks.join("\n\n")
+const buildReference = (editor, pathBuilder) => {
+  const path = pathBuilder(editor.document.uri)
+  return editor.selections.map((sel) => formatLlmCli(path, sel)).join(" ")
 }
 
 //============================================================//
@@ -96,18 +73,17 @@ const withEditor = (handler) => async () => {
 }
 
 //============================================================//
-// Resolve the URIs targeted by copyFilePath.
-// - From explorer/context: VSCode passes (clickedUri, selectedUris[])
-// — return the multi-selection when present, otherwise the click.
-// - From editor/context or command palette: fall back to the
-// active text editor's document URI.
+// Shared handler for both file path commands: they differ only
+// by how each URI is turned into a string.
 //============================================================//
-const resolveFilePathUris = (uri, uris) => {
-  if (Array.isArray(uris) && uris.length > 0) return uris
-  if (uri && uri.fsPath) return [uri]
-  const editor = vscode.window.activeTextEditor
-  if (editor) return [editor.document.uri]
-  return []
+const copyFilePaths = (pathBuilder, label) => async (uri, uris) => {
+  const targets = resolveTargetUris(uri, uris)
+  if (targets.length === 0) {
+    vscode.window.showWarningMessage("No file selected")
+    return
+  }
+  const text = targets.map((u) => `@${pathBuilder(u)}`).join(" ")
+  await copy(text, targets.length > 1 ? `${label}s (${targets.length})` : label)
 }
 
 const activate = (context, sharedOutputChannel) => {
@@ -115,20 +91,13 @@ const activate = (context, sharedOutputChannel) => {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("immosquare-vscode.copyRefLlmCli", withEditor(async (editor) => {
-      await copy(buildReference(editor, formatLlmCli), "llm-cli reference")
+      await copy(buildReference(editor, buildPath), "llm-cli reference")
     })),
-    vscode.commands.registerCommand("immosquare-vscode.copyRefWithCode", withEditor(async (editor) => {
-      await copy(buildReferenceWithCode(editor), "Reference + code")
+    vscode.commands.registerCommand("immosquare-vscode.copyRefLlmCliAbsolute", withEditor(async (editor) => {
+      await copy(buildReference(editor, buildAbsolutePath), "llm-cli absolute reference")
     })),
-    vscode.commands.registerCommand("immosquare-vscode.copyFilePath", async (uri, uris) => {
-      const targets = resolveFilePathUris(uri, uris)
-      if (targets.length === 0) {
-        vscode.window.showWarningMessage("No file selected")
-        return
-      }
-      const text = targets.map((u) => `@${buildPath(u)}`).join(" ")
-      await copy(text, targets.length > 1 ? `File paths (${targets.length})` : "File path")
-    })
+    vscode.commands.registerCommand("immosquare-vscode.copyFilePath", copyFilePaths(buildPath, "File path")),
+    vscode.commands.registerCommand("immosquare-vscode.copyFilePathAbsolute", copyFilePaths(buildAbsolutePath, "Absolute file path"))
   )
 }
 
