@@ -1,4 +1,6 @@
 ---
+created_at: "2025-01-31"
+updated_at: "2026-09-04"
 locale: en
 tags:
   - app:immosquare-vscode
