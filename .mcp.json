@@ -1,11 +1,24 @@
 {
-  "mcpServers": {"chrome-devtools": {
+  "mcpServers": {
+    "chrome-devtools": {
       "command": "bunx",
       "args":    [
         "-y",
         "chrome-devtools-mcp@latest",
-        "--autoConnect=true",
+        "--browserUrl=http://127.0.0.1:9223",
         "--acceptInsecureCerts"
       ]
-    }}
+    },
+    "firefox-devtools": {
+      "command": "bunx",
+      "args":    [
+        "-y",
+        "@mozilla/firefox-devtools-mcp@latest",
+        "--connect-existing",
+        "--marionette-port=2828",
+        "--tool-preset=developer",
+        "--idle-timeout=30"
+      ]
+    }
+  }
 }
